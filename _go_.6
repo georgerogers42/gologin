@@ -1,0 +1,687 @@
+go object linux amd64 weekly.2011-12-22 11071 X:none
+  exports automatically generated from
+  auth.go in package "gologin"
+
+$$  // exports
+    package gologin
+	import runtime "runtime"
+	import http "net/http"
+	import base64 "encoding/base64"
+	import os "os"
+	import strings "strings"
+	import fmt "fmt"
+	import goweb "github.com/georgerogers42/goweb"
+	import regexp "regexp"
+	import syntax "regexp/syntax" // indirect
+	type @"regexp/syntax".InstOp uint8
+	type @"regexp/syntax".Inst struct { Op @"regexp/syntax".InstOp; Out uint32; Arg uint32; Rune []rune }
+	func (@"regexp/syntax".i *@"regexp/syntax".Inst "noescape") MatchEmptyWidth(@"regexp/syntax".before rune, @"regexp/syntax".after rune) bool
+	func (@"regexp/syntax".i *@"regexp/syntax".Inst "noescape") MatchRune(@"regexp/syntax".r rune) bool
+	func (@"regexp/syntax".i *@"regexp/syntax".Inst "noescape") String() string
+	func (@"regexp/syntax".i *@"regexp/syntax".Inst "noescape") @"regexp/syntax".op() @"regexp/syntax".InstOp
+	type @"regexp/syntax".EmptyOp uint8
+	type @"regexp/syntax".Prog struct { Inst []@"regexp/syntax".Inst; Start int; NumCap int }
+	func (@"regexp/syntax".p *@"regexp/syntax".Prog "noescape") Prefix() (@"regexp/syntax".prefix string, @"regexp/syntax".complete bool)
+	func (@"regexp/syntax".p *@"regexp/syntax".Prog "noescape") StartCond() @"regexp/syntax".EmptyOp
+	func (@"regexp/syntax".p *@"regexp/syntax".Prog "noescape") String() string
+	func (@"regexp/syntax".p *@"regexp/syntax".Prog "noescape") @"regexp/syntax".skipNop(@"regexp/syntax".pc uint32) *@"regexp/syntax".Inst
+	import sync "sync" // indirect
+	type @"sync".Mutex struct { @"sync".state int32; @"sync".sema uint32 }
+	func (@"sync".m *@"sync".Mutex) Lock()
+	func (@"sync".m *@"sync".Mutex) Unlock()
+	type @"regexp".thread struct { @"regexp".inst *@"regexp/syntax".Inst; @"regexp".cap []int }
+	type @"regexp".entry struct { @"regexp".pc uint32; @"regexp".t *@"regexp".thread }
+	type @"regexp".queue struct { @"regexp".sparse []uint32; @"regexp".dense []@"regexp".entry }
+	type @"regexp".inputBytes struct { @"regexp".str []byte }
+	func (@"regexp".i *@"regexp".inputBytes "noescape") @"regexp".canCheckPrefix() bool
+	func (@"regexp".i *@"regexp".inputBytes "noescape") @"regexp".context(@"regexp".pos int) @"regexp/syntax".EmptyOp
+	func (@"regexp".i *@"regexp".inputBytes "noescape") @"regexp".hasPrefix(@"regexp".re *@"regexp".Regexp "noescape") bool
+	func (@"regexp".i *@"regexp".inputBytes "noescape") @"regexp".index(@"regexp".re *@"regexp".Regexp "noescape", @"regexp".pos int) int
+	func (@"regexp".i *@"regexp".inputBytes "noescape") @"regexp".step(@"regexp".pos int) (? rune, ? int)
+	type @"regexp".inputString struct { @"regexp".str string }
+	func (@"regexp".i *@"regexp".inputString "noescape") @"regexp".canCheckPrefix() bool
+	func (@"regexp".i *@"regexp".inputString "noescape") @"regexp".context(@"regexp".pos int) @"regexp/syntax".EmptyOp
+	func (@"regexp".i *@"regexp".inputString "noescape") @"regexp".hasPrefix(@"regexp".re *@"regexp".Regexp "noescape") bool
+	func (@"regexp".i *@"regexp".inputString "noescape") @"regexp".index(@"regexp".re *@"regexp".Regexp "noescape", @"regexp".pos int) int
+	func (@"regexp".i *@"regexp".inputString "noescape") @"regexp".step(@"regexp".pos int) (? rune, ? int)
+	import io "io" // indirect
+	type @"io".RuneReader interface { ReadRune() (@"io".r rune, @"io".size int, @"io".err error) }
+	type @"regexp".inputReader struct { @"regexp".r @"io".RuneReader; @"regexp".atEOT bool; @"regexp".pos int }
+	func (@"regexp".i *@"regexp".inputReader "noescape") @"regexp".canCheckPrefix() bool
+	func (@"regexp".i *@"regexp".inputReader "noescape") @"regexp".context(@"regexp".pos int) @"regexp/syntax".EmptyOp
+	func (@"regexp".i *@"regexp".inputReader "noescape") @"regexp".hasPrefix(@"regexp".re *@"regexp".Regexp "noescape") bool
+	func (@"regexp".i *@"regexp".inputReader "noescape") @"regexp".index(@"regexp".re *@"regexp".Regexp "noescape", @"regexp".pos int) int
+	func (@"regexp".i *@"regexp".inputReader "noescape") @"regexp".step(@"regexp".pos int) (? rune, ? int)
+	type @"regexp".input interface { @"regexp".canCheckPrefix() bool; @"regexp".context(@"regexp".pos int) @"regexp/syntax".EmptyOp; @"regexp".hasPrefix(@"regexp".re *@"regexp".Regexp) bool; @"regexp".index(@"regexp".re *@"regexp".Regexp, @"regexp".pos int) int; @"regexp".step(@"regexp".pos int) (@"regexp".r rune, @"regexp".width int) }
+	type @"regexp".machine struct { @"regexp".re *@"regexp".Regexp; @"regexp".p *@"regexp/syntax".Prog; @"regexp".q0 @"regexp".queue; @"regexp".q1 @"regexp".queue; @"regexp".pool []*@"regexp".thread; @"regexp".matched bool; @"regexp".matchcap []int; @"regexp".inputBytes @"regexp".inputBytes; @"regexp".inputString @"regexp".inputString; @"regexp".inputReader @"regexp".inputReader }
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".add(@"regexp".q *@"regexp".queue "noescape", @"regexp".pc uint32, @"regexp".pos int, @"regexp".cap []int "noescape", @"regexp".cond @"regexp/syntax".EmptyOp, @"regexp".t *@"regexp".thread) *@"regexp".thread
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".alloc(@"regexp".i *@"regexp/syntax".Inst) *@"regexp".thread
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".clear(@"regexp".q *@"regexp".queue "noescape")
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".free(@"regexp".t *@"regexp".thread)
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".init(@"regexp".ncap int)
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".match(@"regexp".i @"regexp".input, @"regexp".pos int) bool
+	func (@"regexp".m *@"regexp".machine) @"regexp".newInputBytes(@"regexp".b []byte) @"regexp".input
+	func (@"regexp".m *@"regexp".machine) @"regexp".newInputReader(@"regexp".r @"io".RuneReader) @"regexp".input
+	func (@"regexp".m *@"regexp".machine) @"regexp".newInputString(@"regexp".s string) @"regexp".input
+	func (@"regexp".m *@"regexp".machine "noescape") @"regexp".step(@"regexp".runq *@"regexp".queue "noescape", @"regexp".nextq *@"regexp".queue "noescape", @"regexp".pos int, @"regexp".nextPos int, @"regexp".c rune, @"regexp".nextCond @"regexp/syntax".EmptyOp)
+	type @"regexp".Regexp struct { @"regexp".expr string; @"regexp".prog *@"regexp/syntax".Prog; @"regexp".prefix string; @"regexp".prefixBytes []byte; @"regexp".prefixComplete bool; @"regexp".prefixRune rune; @"regexp".cond @"regexp/syntax".EmptyOp; @"regexp".numSubexp int; @"regexp".longest bool; @"regexp".mu @"sync".Mutex; @"regexp".machine []*@"regexp".machine }
+	func (@"regexp".re *@"regexp".Regexp) Find(@"regexp".b []byte) []byte
+	func (@"regexp".re *@"regexp".Regexp) FindAll(@"regexp".b []byte, @"regexp".n int) [][]byte
+	func (@"regexp".re *@"regexp".Regexp) FindAllIndex(@"regexp".b []byte, @"regexp".n int) [][]int
+	func (@"regexp".re *@"regexp".Regexp) FindAllString(@"regexp".s string, @"regexp".n int) []string
+	func (@"regexp".re *@"regexp".Regexp) FindAllStringIndex(@"regexp".s string, @"regexp".n int) [][]int
+	func (@"regexp".re *@"regexp".Regexp) FindAllStringSubmatch(@"regexp".s string, @"regexp".n int) [][]string
+	func (@"regexp".re *@"regexp".Regexp) FindAllStringSubmatchIndex(@"regexp".s string, @"regexp".n int) [][]int
+	func (@"regexp".re *@"regexp".Regexp) FindAllSubmatch(@"regexp".b []byte, @"regexp".n int) [][][]byte
+	func (@"regexp".re *@"regexp".Regexp) FindAllSubmatchIndex(@"regexp".b []byte, @"regexp".n int) [][]int
+	func (@"regexp".re *@"regexp".Regexp) FindIndex(@"regexp".b []byte) []int
+	func (@"regexp".re *@"regexp".Regexp) FindReaderIndex(@"regexp".r @"io".RuneReader) []int
+	func (@"regexp".re *@"regexp".Regexp) FindReaderSubmatchIndex(@"regexp".r @"io".RuneReader) []int
+	func (@"regexp".re *@"regexp".Regexp) FindString(@"regexp".s string) string
+	func (@"regexp".re *@"regexp".Regexp) FindStringIndex(@"regexp".s string) []int
+	func (@"regexp".re *@"regexp".Regexp) FindStringSubmatch(@"regexp".s string) []string
+	func (@"regexp".re *@"regexp".Regexp) FindStringSubmatchIndex(@"regexp".s string) []int
+	func (@"regexp".re *@"regexp".Regexp) FindSubmatch(@"regexp".b []byte) [][]byte
+	func (@"regexp".re *@"regexp".Regexp) FindSubmatchIndex(@"regexp".b []byte) []int
+	func (@"regexp".re *@"regexp".Regexp "noescape") LiteralPrefix() (@"regexp".prefix string, @"regexp".complete bool)
+	func (@"regexp".re *@"regexp".Regexp) Match(@"regexp".b []byte) bool
+	func (@"regexp".re *@"regexp".Regexp) MatchReader(@"regexp".r @"io".RuneReader) bool
+	func (@"regexp".re *@"regexp".Regexp) MatchString(@"regexp".s string) bool
+	func (@"regexp".re *@"regexp".Regexp "noescape") NumSubexp() int
+	func (@"regexp".re *@"regexp".Regexp) ReplaceAll(@"regexp".src []byte, @"regexp".repl []byte "noescape") []byte
+	func (@"regexp".re *@"regexp".Regexp) ReplaceAllFunc(@"regexp".src []byte, @"regexp".repl func(? []byte) []byte "noescape") []byte
+	func (@"regexp".re *@"regexp".Regexp) ReplaceAllString(@"regexp".src string, @"regexp".repl string "noescape") string
+	func (@"regexp".re *@"regexp".Regexp) ReplaceAllStringFunc(@"regexp".src string, @"regexp".repl func(? string) string "noescape") string
+	func (@"regexp".re *@"regexp".Regexp "noescape") String() string
+	func (@"regexp".re *@"regexp".Regexp) @"regexp".allMatches(@"regexp".s string, @"regexp".b []byte, @"regexp".n int, @"regexp".deliver func(? []int) "noescape")
+	func (@"regexp".re *@"regexp".Regexp) @"regexp".doExecute(@"regexp".r @"io".RuneReader, @"regexp".b []byte, @"regexp".s string, @"regexp".pos int, @"regexp".ncap int) []int
+	func (@"regexp".re *@"regexp".Regexp) @"regexp".get() *@"regexp".machine
+	func (@"regexp".re *@"regexp".Regexp "noescape") @"regexp".pad(@"regexp".a []int) []int
+	func (@"regexp".re *@"regexp".Regexp) @"regexp".put(@"regexp".z *@"regexp".machine)
+	var @"".kBasicAuthPattern *@"regexp".Regexp
+	import url "net/url" // indirect
+	type @"net/url".Values map[string][]string
+	func (@"net/url".v @"net/url".Values "noescape") Add(@"net/url".key string, @"net/url".value string)
+	func (@"net/url".v @"net/url".Values "noescape") Del(@"net/url".key string "noescape")
+	func (@"net/url".v @"net/url".Values "noescape") Encode() string
+	func (@"net/url".v @"net/url".Values "noescape") Get(@"net/url".key string "noescape") string
+	func (@"net/url".v @"net/url".Values "noescape") Set(@"net/url".key string, @"net/url".value string)
+	type @"net/url".URL struct { Raw string; Scheme string; RawAuthority string; RawUserinfo string; Host string; RawPath string; Path string; OpaquePath bool; RawQuery string; Fragment string }
+	func (@"net/url".u *@"net/url".URL "noescape") EncodedPath() string
+	func (@"net/url".url *@"net/url".URL "noescape") IsAbs() bool
+	func (@"net/url".base *@"net/url".URL "noescape") Parse(@"net/url".ref string) (? *@"net/url".URL, ? error)
+	func (@"net/url".u *@"net/url".URL "noescape") Query() @"net/url".Values
+	func (@"net/url".base *@"net/url".URL "noescape") ResolveReference(@"net/url".ref *@"net/url".URL "noescape") *@"net/url".URL
+	func (@"net/url".url *@"net/url".URL "noescape") String() string
+	type @"io".Writer interface { Write(@"io".p []byte) (@"io".n int, @"io".err error) }
+	type @"net/http".Header map[string][]string
+	func (@"net/http".h @"net/http".Header "noescape") Add(@"net/http".key string, @"net/http".value string)
+	func (@"net/http".h @"net/http".Header "noescape") Del(@"net/http".key string)
+	func (@"net/http".h @"net/http".Header "noescape") Get(@"net/http".key string) string
+	func (@"net/http".h @"net/http".Header "noescape") Set(@"net/http".key string, @"net/http".value string)
+	func (@"net/http".h @"net/http".Header "noescape") Write(@"net/http".w @"io".Writer) error
+	func (@"net/http".h @"net/http".Header "noescape") WriteSubset(@"net/http".w @"io".Writer, @"net/http".exclude map[string]bool "noescape") error
+	type @"io".ReadCloser interface { Close() error; Read(@"io".p []byte) (@"io".n int, @"io".err error) }
+	import multipart "mime/multipart" // indirect
+	import textproto "net/textproto" // indirect
+	type @"net/textproto".MIMEHeader map[string][]string
+	func (@"net/textproto".h @"net/textproto".MIMEHeader "noescape") Add(@"net/textproto".key string, @"net/textproto".value string)
+	func (@"net/textproto".h @"net/textproto".MIMEHeader "noescape") Del(@"net/textproto".key string)
+	func (@"net/textproto".h @"net/textproto".MIMEHeader "noescape") Get(@"net/textproto".key string) string
+	func (@"net/textproto".h @"net/textproto".MIMEHeader "noescape") Set(@"net/textproto".key string, @"net/textproto".value string)
+	type @"mime/multipart".File interface { Close() error; Read(@"io".p []byte) (@"io".n int, @"io".err error); ReadAt(@"io".p []byte, @"io".off int64) (@"io".n int, @"io".err error); Seek(@"io".offset int64, @"io".whence int) (@"io".ret int64, @"io".err error) }
+	type @"mime/multipart".FileHeader struct { Filename string; Header @"net/textproto".MIMEHeader; @"mime/multipart".content []byte; @"mime/multipart".tmpfile string }
+	func (@"mime/multipart".fh *@"mime/multipart".FileHeader "noescape") Open() (? @"mime/multipart".File, ? error)
+	type @"mime/multipart".Form struct { Value map[string][]string; File map[string][]*@"mime/multipart".FileHeader }
+	func (@"mime/multipart".f *@"mime/multipart".Form "noescape") RemoveAll() error
+	import tls "crypto/tls" // indirect
+	import x509 "crypto/x509" // indirect
+	type @"crypto/x509".SignatureAlgorithm int
+	type @"crypto/x509".PublicKeyAlgorithm int
+	import big "math/big" // indirect
+	type @"math/big".Word uintptr
+	type @"math/big".divisor struct { @"math/big".bbb @"math/big".nat; @"math/big".nbits int; @"math/big".ndigits int }
+	import rand "math/rand" // indirect
+	type @"math/rand".Source interface { Int63() int64; Seed(@"math/rand".seed int64) }
+	type @"math/rand".Rand struct { @"math/rand".src @"math/rand".Source }
+	func (@"math/rand".r *@"math/rand".Rand "noescape") ExpFloat64() float64
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Float32() float32
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Float64() float64
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Int() int
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Int31() int32
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Int31n(@"math/rand".n int32) int32
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Int63() int64
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Int63n(@"math/rand".n int64) int64
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Intn(@"math/rand".n int) int
+	func (@"math/rand".r *@"math/rand".Rand "noescape") NormFloat64() float64
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Perm(@"math/rand".n int) []int
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Seed(@"math/rand".seed int64)
+	func (@"math/rand".r *@"math/rand".Rand "noescape") Uint32() uint32
+	type @"io".RuneScanner interface { ReadRune() (@"io".r rune, @"io".size int, @"io".err error); UnreadRune() error }
+	type @"math/big".nat []@"math/big".Word
+	func (@"math/big".z @"math/big".nat) @"math/big".add(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".nat) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".and(@"math/big".x @"math/big".nat "noescape", @"math/big".y @"math/big".nat "noescape") @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".andNot(@"math/big".x @"math/big".nat "noescape", @"math/big".y @"math/big".nat "noescape") @"math/big".nat
+	func (@"math/big".z @"math/big".nat "noescape") @"math/big".bit(@"math/big".i uint) uint
+	func (@"math/big".x @"math/big".nat "noescape") @"math/big".bitLen() int
+	func (@"math/big".z @"math/big".nat "noescape") @"math/big".bytes(@"math/big".buf []byte "noescape") int
+	func (@"math/big".z @"math/big".nat "noescape") @"math/big".clear()
+	func (@"math/big".x @"math/big".nat "noescape") @"math/big".cmp(@"math/big".y @"math/big".nat "noescape") int
+	func (@"math/big".q @"math/big".nat) @"math/big".convertWords(@"math/big".lo int, @"math/big".hi int, @"math/big".s []byte "noescape", @"math/big".charset string "noescape", @"math/big".b @"math/big".Word, @"math/big".ndigits int, @"math/big".bb @"math/big".Word, @"math/big".table []@"math/big".divisor "noescape") int
+	func (@"math/big".x @"math/big".nat "noescape") @"math/big".decimalString() string
+	func (@"math/big".z @"math/big".nat) @"math/big".div(@"math/big".z2 @"math/big".nat, @"math/big".u @"math/big".nat, @"math/big".v @"math/big".nat) (@"math/big".q @"math/big".nat, @"math/big".r @"math/big".nat)
+	func (@"math/big".z @"math/big".nat) @"math/big".divLarge(@"math/big".u @"math/big".nat, @"math/big".uIn @"math/big".nat, @"math/big".v @"math/big".nat) (@"math/big".q @"math/big".nat, @"math/big".r @"math/big".nat)
+	func (@"math/big".z @"math/big".nat) @"math/big".divW(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".Word) (@"math/big".q @"math/big".nat, @"math/big".r @"math/big".Word)
+	func (@"math/big".z @"math/big".nat) @"math/big".expNN(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".nat "noescape", @"math/big".m @"math/big".nat) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".expWW(@"math/big".x @"math/big".Word, @"math/big".y @"math/big".Word) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".make(@"math/big".n int) @"math/big".nat
+	func (@"math/big".x @"math/big".nat) @"math/big".modW(@"math/big".d @"math/big".Word) @"math/big".Word
+	func (@"math/big".z @"math/big".nat) @"math/big".mul(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".nat) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".mulAddWW(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".Word, @"math/big".r @"math/big".Word) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".mulRange(@"math/big".a uint64, @"math/big".b uint64) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".norm() @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".or(@"math/big".x @"math/big".nat "noescape", @"math/big".y @"math/big".nat "noescape") @"math/big".nat
+	func (@"math/big".x @"math/big".nat) @"math/big".powersOfTwoDecompose() (@"math/big".q @"math/big".nat, @"math/big".k int)
+	func (@"math/big".n @"math/big".nat) @"math/big".probablyPrime(@"math/big".reps int) bool
+	func (@"math/big".z @"math/big".nat) @"math/big".random(@"math/big".rand *@"math/rand".Rand "noescape", @"math/big".limit @"math/big".nat "noescape", @"math/big".n int) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".scan(@"math/big".r @"io".RuneScanner, @"math/big".base int) (? @"math/big".nat, ? int, ? error)
+	func (@"math/big".z @"math/big".nat) @"math/big".set(@"math/big".x @"math/big".nat "noescape") @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".setBit(@"math/big".x @"math/big".nat "noescape", @"math/big".i uint, @"math/big".b uint) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".setBytes(@"math/big".buf []byte "noescape") @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".setUint64(@"math/big".x uint64) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".setWord(@"math/big".x @"math/big".Word) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".shl(@"math/big".x @"math/big".nat, @"math/big".s uint) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".shr(@"math/big".x @"math/big".nat, @"math/big".s uint) @"math/big".nat
+	func (@"math/big".x @"math/big".nat "noescape") @"math/big".string(@"math/big".charset string "noescape") string
+	func (@"math/big".z @"math/big".nat) @"math/big".sub(@"math/big".x @"math/big".nat, @"math/big".y @"math/big".nat) @"math/big".nat
+	func (@"math/big".z @"math/big".nat) @"math/big".xor(@"math/big".x @"math/big".nat "noescape", @"math/big".y @"math/big".nat "noescape") @"math/big".nat
+	type @"fmt".State interface { Flag(@"fmt".c int) bool; Precision() (@"fmt".prec int, @"fmt".ok bool); Width() (@"fmt".wid int, @"fmt".ok bool); Write(@"fmt".b []byte) (@"fmt".ret int, @"fmt".err error) }
+	type @"fmt".ScanState interface { Read(@"fmt".buf []byte) (@"fmt".n int, @"fmt".err error); ReadRune() (@"fmt".r rune, @"fmt".size int, @"fmt".err error); SkipSpace(); Token(@"fmt".skipSpace bool, @"fmt".f func(? rune) bool) (@"fmt".token []byte, @"fmt".err error); UnreadRune() error; Width() (@"fmt".wid int, @"fmt".ok bool) }
+	type @"math/big".Int struct { @"math/big".neg bool; @"math/big".abs @"math/big".nat }
+	func (@"math/big".z *@"math/big".Int) Abs(@"math/big".x *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Add(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) And(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) AndNot(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Binomial(@"math/big".n int64, @"math/big".k int64) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int "noescape") Bit(@"math/big".i int) uint
+	func (@"math/big".z *@"math/big".Int "noescape") BitLen() int
+	func (@"math/big".z *@"math/big".Int "noescape") Bytes() []byte
+	func (@"math/big".x *@"math/big".Int "noescape") Cmp(@"math/big".y *@"math/big".Int "noescape") int
+	func (@"math/big".z *@"math/big".Int) Div(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) DivMod(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape", @"math/big".m *@"math/big".Int) (? *@"math/big".Int, ? *@"math/big".Int)
+	func (@"math/big".z *@"math/big".Int) Exp(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape", @"math/big".m *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".x *@"math/big".Int "noescape") Format(@"math/big".s @"fmt".State, @"math/big".ch rune)
+	func (@"math/big".z *@"math/big".Int "noescape") GobDecode(@"math/big".buf []byte "noescape") error
+	func (@"math/big".z *@"math/big".Int "noescape") GobEncode() (? []byte, ? error)
+	func (@"math/big".x *@"math/big".Int "noescape") Int64() int64
+	func (@"math/big".z *@"math/big".Int) Lsh(@"math/big".x *@"math/big".Int "noescape", @"math/big".n uint) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Mod(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) ModInverse(@"math/big".g *@"math/big".Int "noescape", @"math/big".p *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Mul(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) MulRange(@"math/big".a int64, @"math/big".b int64) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Neg(@"math/big".x *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Not(@"math/big".x *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Or(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Quo(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) QuoRem(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape", @"math/big".r *@"math/big".Int) (? *@"math/big".Int, ? *@"math/big".Int)
+	func (@"math/big".z *@"math/big".Int) Rand(@"math/big".rnd *@"math/rand".Rand "noescape", @"math/big".n *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Rem(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Rsh(@"math/big".x *@"math/big".Int "noescape", @"math/big".n uint) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Scan(@"math/big".s @"fmt".ScanState, @"math/big".ch rune) error
+	func (@"math/big".z *@"math/big".Int) Set(@"math/big".x *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) SetBit(@"math/big".x *@"math/big".Int "noescape", @"math/big".i int, @"math/big".b uint) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) SetBytes(@"math/big".buf []byte "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) SetInt64(@"math/big".x int64) *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) SetString(@"math/big".s string, @"math/big".base int) (? *@"math/big".Int, ? bool)
+	func (@"math/big".x *@"math/big".Int "noescape") Sign() int
+	func (@"math/big".x *@"math/big".Int "noescape") String() string
+	func (@"math/big".z *@"math/big".Int) Sub(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) Xor(@"math/big".x *@"math/big".Int "noescape", @"math/big".y *@"math/big".Int "noescape") *@"math/big".Int
+	func (@"math/big".z *@"math/big".Int) @"math/big".scan(@"math/big".r @"io".RuneScanner, @"math/big".base int) (? *@"math/big".Int, ? int, ? error)
+	import pkix "crypto/x509/pkix" // indirect
+	import asn1 "encoding/asn1" // indirect
+	type @"encoding/asn1".ObjectIdentifier []int
+	func (@"encoding/asn1".oi @"encoding/asn1".ObjectIdentifier "noescape") Equal(@"encoding/asn1".other @"encoding/asn1".ObjectIdentifier "noescape") bool
+	type @"crypto/x509/pkix".AttributeTypeAndValue struct { Type @"encoding/asn1".ObjectIdentifier; Value interface {} }
+	type @"crypto/x509/pkix".RelativeDistinguishedNameSET []@"crypto/x509/pkix".AttributeTypeAndValue
+	type @"crypto/x509/pkix".RDNSequence []@"crypto/x509/pkix".RelativeDistinguishedNameSET
+	type @"crypto/x509/pkix".Name struct { Country []string; Organization []string; OrganizationalUnit []string; Locality []string; Province []string; StreetAddress []string; PostalCode []string; SerialNumber string; CommonName string; Names []@"crypto/x509/pkix".AttributeTypeAndValue }
+	func (@"crypto/x509/pkix".n *@"crypto/x509/pkix".Name "noescape") FillFromRDNSequence(@"crypto/x509/pkix".rdns *@"crypto/x509/pkix".RDNSequence "noescape")
+	func (@"crypto/x509/pkix".n @"crypto/x509/pkix".Name) ToRDNSequence() @"crypto/x509/pkix".RDNSequence
+	import time "time" // indirect
+	type @"time".zone struct { @"time".name string; @"time".offset int; @"time".isDST bool }
+	type @"time".zoneTrans struct { @"time".when int64; @"time".index uint8; @"time".isstd bool; @"time".isutc bool }
+	type @"time".Location struct { @"time".name string; @"time".zone []@"time".zone; @"time".tx []@"time".zoneTrans; @"time".cacheStart int64; @"time".cacheEnd int64; @"time".cacheZone *@"time".zone }
+	func (@"time".l *@"time".Location) String() string
+	func (@"time".l *@"time".Location) @"time".get() *@"time".Location
+	func (@"time".l *@"time".Location) @"time".lookup(@"time".sec int64) (@"time".name string, @"time".offset int, @"time".isDST bool, @"time".start int64, @"time".end int64)
+	func (@"time".l *@"time".Location) @"time".lookupName(@"time".name string "noescape") (@"time".offset int, @"time".isDST bool, @"time".ok bool)
+	func (@"time".l *@"time".Location) @"time".lookupOffset(@"time".offset int) (@"time".name string, @"time".isDST bool, @"time".ok bool)
+	type @"time".Duration int64
+	func (@"time".d @"time".Duration) Hours() float64
+	func (@"time".d @"time".Duration) Minutes() float64
+	func (@"time".d @"time".Duration) Nanoseconds() int64
+	func (@"time".d @"time".Duration) Seconds() float64
+	func (@"time".d @"time".Duration) String() string
+	type @"time".Month int
+	func (@"time".m @"time".Month) String() string
+	type @"time".Weekday int
+	func (@"time".d @"time".Weekday) String() string
+	type @"time".Time struct { @"time".sec int64; @"time".nsec int32; @"time".loc *@"time".Location }
+	func (@"time".t @"time".Time) Add(@"time".d @"time".Duration) @"time".Time
+	func (@"time".t @"time".Time) AddDate(@"time".years int, @"time".months int, @"time".days int) @"time".Time
+	func (@"time".t @"time".Time "noescape") After(@"time".u @"time".Time "noescape") bool
+	func (@"time".t @"time".Time "noescape") Before(@"time".u @"time".Time "noescape") bool
+	func (@"time".t @"time".Time) Clock() (@"time".hour int, @"time".min int, @"time".sec int)
+	func (@"time".t @"time".Time) Date() (@"time".year int, @"time".month @"time".Month, @"time".day int)
+	func (@"time".t @"time".Time) Day() int
+	func (@"time".t @"time".Time "noescape") Equal(@"time".u @"time".Time "noescape") bool
+	func (@"time".t @"time".Time) Format(@"time".layout string) string
+	func (@"time".t *@"time".Time "noescape") GobDecode(@"time".buf []byte "noescape") error
+	func (@"time".t @"time".Time) GobEncode() (? []byte, ? error)
+	func (@"time".t @"time".Time) Hour() int
+	func (@"time".t @"time".Time) ISOWeek() (@"time".year int, @"time".week int)
+	func (@"time".t @"time".Time) In(@"time".loc *@"time".Location) @"time".Time
+	func (@"time".t @"time".Time "noescape") IsZero() bool
+	func (@"time".t @"time".Time) Local() @"time".Time
+	func (@"time".t @"time".Time) Location() *@"time".Location
+	func (@"time".t @"time".Time) MarshalJSON() (? []byte, ? error)
+	func (@"time".t @"time".Time) Minute() int
+	func (@"time".t @"time".Time) Month() @"time".Month
+	func (@"time".t @"time".Time) Nanosecond() int
+	func (@"time".t @"time".Time) Second() int
+	func (@"time".t @"time".Time) String() string
+	func (@"time".t @"time".Time) Sub(@"time".u @"time".Time) @"time".Duration
+	func (@"time".t @"time".Time) UTC() @"time".Time
+	func (@"time".t @"time".Time) Unix() int64
+	func (@"time".t @"time".Time) UnixNano() int64
+	func (@"time".t *@"time".Time "noescape") UnmarshalJSON(@"time".data []byte "noescape") error
+	func (@"time".t @"time".Time) Weekday() @"time".Weekday
+	func (@"time".t @"time".Time) Year() int
+	func (@"time".t @"time".Time) Zone() (@"time".name string, @"time".offset int)
+	func (@"time".t @"time".Time) @"time".abs() uint64
+	func (@"time".t @"time".Time) @"time".date(@"time".full bool) (@"time".year int, @"time".month @"time".Month, @"time".day int, @"time".yday int)
+	type @"crypto/x509".KeyUsage int
+	type @"crypto/x509".ExtKeyUsage int
+	type @"encoding/asn1".RawContent []byte
+	type @"encoding/asn1".RawValue struct { Class int; Tag int; IsCompound bool; Bytes []byte; FullBytes []byte }
+	type @"crypto/x509/pkix".AlgorithmIdentifier struct { Algorithm @"encoding/asn1".ObjectIdentifier; Parameters @"encoding/asn1".RawValue "asn1:\"optional\"" }
+	type @"crypto/x509/pkix".Extension struct { Id @"encoding/asn1".ObjectIdentifier; Critical bool "asn1:\"optional\""; Value []byte }
+	type @"crypto/x509/pkix".RevokedCertificate struct { SerialNumber *@"math/big".Int; RevocationTime @"time".Time; Extensions []@"crypto/x509/pkix".Extension "asn1:\"optional\"" }
+	type @"crypto/x509/pkix".TBSCertificateList struct { Raw @"encoding/asn1".RawContent; Version int "asn1:\"optional,default:2\""; Signature @"crypto/x509/pkix".AlgorithmIdentifier; Issuer @"crypto/x509/pkix".RDNSequence; ThisUpdate @"time".Time; NextUpdate @"time".Time; RevokedCertificates []@"crypto/x509/pkix".RevokedCertificate "asn1:\"optional\""; Extensions []@"crypto/x509/pkix".Extension "asn1:\"tag:0,optional,explicit\"" }
+	type @"encoding/asn1".BitString struct { Bytes []byte; BitLength int }
+	func (@"encoding/asn1".b @"encoding/asn1".BitString "noescape") At(@"encoding/asn1".i int) int
+	func (@"encoding/asn1".b @"encoding/asn1".BitString) RightAlign() []byte
+	type @"crypto/x509/pkix".CertificateList struct { TBSCertList @"crypto/x509/pkix".TBSCertificateList; SignatureAlgorithm @"crypto/x509/pkix".AlgorithmIdentifier; SignatureValue @"encoding/asn1".BitString }
+	func (@"crypto/x509/pkix".certList *@"crypto/x509/pkix".CertificateList "noescape") HasExpired(@"crypto/x509/pkix".now @"time".Time "noescape") bool
+	type @"io".Reader interface { Read(@"io".p []byte) (@"io".n int, @"io".err error) }
+	import rsa "crypto/rsa" // indirect
+	type @"crypto/rsa".PublicKey struct { N *@"math/big".Int; E int }
+	type @"crypto/rsa".CRTValue struct { Exp *@"math/big".Int; Coeff *@"math/big".Int; R *@"math/big".Int }
+	type @"crypto/rsa".PrecomputedValues struct { Dp *@"math/big".Int; Dq *@"math/big".Int; Qinv *@"math/big".Int; CRTValues []@"crypto/rsa".CRTValue }
+	type @"crypto/rsa".PrivateKey struct { ? @"crypto/rsa".PublicKey; D *@"math/big".Int; Primes []*@"math/big".Int; Precomputed @"crypto/rsa".PrecomputedValues }
+	func (@"crypto/rsa".priv *@"crypto/rsa".PrivateKey "noescape") Precompute()
+	func (@"crypto/rsa".priv *@"crypto/rsa".PrivateKey "noescape") Validate() error
+	type @"crypto/x509".CertPool struct { @"crypto/x509".bySubjectKeyId map[string][]int; @"crypto/x509".byName map[string][]int; @"crypto/x509".certs []*@"crypto/x509".Certificate }
+	func (@"crypto/x509".s *@"crypto/x509".CertPool "noescape") AddCert(@"crypto/x509".cert *@"crypto/x509".Certificate)
+	func (@"crypto/x509".s *@"crypto/x509".CertPool "noescape") AppendCertsFromPEM(@"crypto/x509".pemCerts []byte) bool
+	func (@"crypto/x509".s *@"crypto/x509".CertPool "noescape") @"crypto/x509".findVerifiedParents(@"crypto/x509".cert *@"crypto/x509".Certificate "noescape") []int
+	type @"crypto/x509".VerifyOptions struct { DNSName string; Intermediates *@"crypto/x509".CertPool; Roots *@"crypto/x509".CertPool; CurrentTime @"time".Time }
+	type @"crypto/x509".Certificate struct { Raw []byte; RawTBSCertificate []byte; RawSubjectPublicKeyInfo []byte; RawSubject []byte; RawIssuer []byte; Signature []byte; SignatureAlgorithm @"crypto/x509".SignatureAlgorithm; PublicKeyAlgorithm @"crypto/x509".PublicKeyAlgorithm; PublicKey interface {}; Version int; SerialNumber *@"math/big".Int; Issuer @"crypto/x509/pkix".Name; Subject @"crypto/x509/pkix".Name; NotBefore @"time".Time; NotAfter @"time".Time; KeyUsage @"crypto/x509".KeyUsage; ExtKeyUsage []@"crypto/x509".ExtKeyUsage; UnknownExtKeyUsage []@"encoding/asn1".ObjectIdentifier; BasicConstraintsValid bool; IsCA bool; MaxPathLen int; SubjectKeyId []byte; AuthorityKeyId []byte; DNSNames []string; EmailAddresses []string; PermittedDNSDomainsCritical bool; PermittedDNSDomains []string; PolicyIdentifiers []@"encoding/asn1".ObjectIdentifier }
+	func (@"crypto/x509".c *@"crypto/x509".Certificate "noescape") CheckCRLSignature(@"crypto/x509".crl *@"crypto/x509/pkix".CertificateList "noescape") error
+	func (@"crypto/x509".c *@"crypto/x509".Certificate "noescape") CheckSignature(@"crypto/x509".algo @"crypto/x509".SignatureAlgorithm, @"crypto/x509".signed []byte, @"crypto/x509".signature []byte) error
+	func (@"crypto/x509".c *@"crypto/x509".Certificate "noescape") CheckSignatureFrom(@"crypto/x509".parent *@"crypto/x509".Certificate "noescape") error
+	func (@"crypto/x509".c *@"crypto/x509".Certificate "noescape") CreateCRL(@"crypto/x509".rand @"io".Reader, @"crypto/x509".priv *@"crypto/rsa".PrivateKey "noescape", @"crypto/x509".revokedCerts []@"crypto/x509/pkix".RevokedCertificate, @"crypto/x509".now @"time".Time, @"crypto/x509".expiry @"time".Time) (@"crypto/x509".crlBytes []byte, @"crypto/x509".err error)
+	func (@"crypto/x509".c *@"crypto/x509".Certificate "noescape") Equal(@"crypto/x509".other *@"crypto/x509".Certificate "noescape") bool
+	func (@"crypto/x509".c *@"crypto/x509".Certificate) Verify(@"crypto/x509".opts @"crypto/x509".VerifyOptions) (@"crypto/x509".chains [][]*@"crypto/x509".Certificate, @"crypto/x509".err error)
+	func (@"crypto/x509".c *@"crypto/x509".Certificate) VerifyHostname(@"crypto/x509".h string) error
+	func (@"crypto/x509".c *@"crypto/x509".Certificate) @"crypto/x509".buildChains(@"crypto/x509".cache map[int][][]*@"crypto/x509".Certificate "noescape", @"crypto/x509".currentChain []*@"crypto/x509".Certificate "noescape", @"crypto/x509".opts *@"crypto/x509".VerifyOptions "noescape") (@"crypto/x509".chains [][]*@"crypto/x509".Certificate, @"crypto/x509".err error)
+	func (@"crypto/x509".c *@"crypto/x509".Certificate) @"crypto/x509".isValid(@"crypto/x509".certType int, @"crypto/x509".opts *@"crypto/x509".VerifyOptions "noescape") error
+	type @"crypto/tls".ConnectionState struct { HandshakeComplete bool; CipherSuite uint16; NegotiatedProtocol string; NegotiatedProtocolIsMutual bool; ServerName string; PeerCertificates []*@"crypto/x509".Certificate; VerifiedChains [][]*@"crypto/x509".Certificate }
+	type @"net/http".Cookie struct { Name string; Value string; Path string; Domain string; Expires @"time".Time; RawExpires string; MaxAge int; Secure bool; HttpOnly bool; Raw string; Unparsed []string }
+	func (@"net/http".c *@"net/http".Cookie "noescape") String() string
+	import bufio "bufio" // indirect
+	type @"bufio".Reader struct { @"bufio".buf []byte; @"bufio".rd @"io".Reader; @"bufio".r int; @"bufio".w int; @"bufio".err error; @"bufio".lastByte int; @"bufio".lastRuneSize int }
+	func (@"bufio".b *@"bufio".Reader "noescape") Buffered() int
+	func (@"bufio".b *@"bufio".Reader "noescape") Peek(@"bufio".n int) (? []byte, ? error)
+	func (@"bufio".b *@"bufio".Reader "noescape") Read(@"bufio".p []byte) (@"bufio".n int, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadByte() (@"bufio".c byte, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadBytes(@"bufio".delim byte) (@"bufio".line []byte, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadLine() (@"bufio".line []byte, @"bufio".isPrefix bool, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadRune() (@"bufio".r rune, @"bufio".size int, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadSlice(@"bufio".delim byte) (@"bufio".line []byte, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") ReadString(@"bufio".delim byte) (@"bufio".line string, @"bufio".err error)
+	func (@"bufio".b *@"bufio".Reader "noescape") UnreadByte() error
+	func (@"bufio".b *@"bufio".Reader "noescape") UnreadRune() error
+	func (@"bufio".b *@"bufio".Reader "noescape") @"bufio".fill()
+	func (@"bufio".b *@"bufio".Reader "noescape") @"bufio".readErr() error
+	import bytes "bytes" // indirect
+	type @"bytes".readOp int
+	type @"bytes".Buffer struct { @"bytes".buf []byte; @"bytes".off int; @"bytes".runeBytes [4]byte; @"bytes".bootstrap [64]byte; @"bytes".lastRead @"bytes".readOp }
+	func (@"bytes".b *@"bytes".Buffer "noescape") Bytes() []byte
+	func (@"bytes".b *@"bytes".Buffer "noescape") Len() int
+	func (@"bytes".b *@"bytes".Buffer "noescape") Next(@"bytes".n int) []byte
+	func (@"bytes".b *@"bytes".Buffer "noescape") Read(@"bytes".p []byte "noescape") (@"bytes".n int, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") ReadByte() (@"bytes".c byte, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") ReadBytes(@"bytes".delim byte) (@"bytes".line []byte, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") ReadFrom(@"bytes".r @"io".Reader) (@"bytes".n int64, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") ReadRune() (@"bytes".r rune, @"bytes".size int, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") ReadString(@"bytes".delim byte) (@"bytes".line string, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") Reset()
+	func (@"bytes".b *@"bytes".Buffer "noescape") String() string
+	func (@"bytes".b *@"bytes".Buffer "noescape") Truncate(@"bytes".n int)
+	func (@"bytes".b *@"bytes".Buffer "noescape") UnreadByte() error
+	func (@"bytes".b *@"bytes".Buffer "noescape") UnreadRune() error
+	func (@"bytes".b *@"bytes".Buffer) Write(@"bytes".p []byte "noescape") (@"bytes".n int, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer) WriteByte(@"bytes".c byte) error
+	func (@"bytes".b *@"bytes".Buffer) WriteRune(@"bytes".r rune) (@"bytes".n int, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer) WriteString(@"bytes".s string "noescape") (@"bytes".n int, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer "noescape") WriteTo(@"bytes".w @"io".Writer) (@"bytes".n int64, @"bytes".err error)
+	func (@"bytes".b *@"bytes".Buffer) @"bytes".grow(@"bytes".n int) int
+	type @"mime/multipart".Part struct { Header @"net/textproto".MIMEHeader; @"mime/multipart".buffer *@"bytes".Buffer; @"mime/multipart".mr *@"mime/multipart".Reader; @"mime/multipart".disposition string; @"mime/multipart".dispositionParams map[string]string }
+	func (@"mime/multipart".bp *@"mime/multipart".Part) Close() error
+	func (@"mime/multipart".p *@"mime/multipart".Part "noescape") FileName() string
+	func (@"mime/multipart".p *@"mime/multipart".Part "noescape") FormName() string
+	func (@"mime/multipart".bp *@"mime/multipart".Part "noescape") Read(@"mime/multipart".p []byte "noescape") (@"mime/multipart".n int, @"mime/multipart".err error)
+	func (@"mime/multipart".p *@"mime/multipart".Part "noescape") @"mime/multipart".parseContentDisposition()
+	func (@"mime/multipart".bp *@"mime/multipart".Part "noescape") @"mime/multipart".populateHeaders() error
+	type @"mime/multipart".Reader struct { @"mime/multipart".bufReader *@"bufio".Reader; @"mime/multipart".currentPart *@"mime/multipart".Part; @"mime/multipart".partsRead int; @"mime/multipart".nl []byte; @"mime/multipart".nlDashBoundary []byte; @"mime/multipart".dashBoundaryDash []byte; @"mime/multipart".dashBoundary []byte }
+	func (@"mime/multipart".mr *@"mime/multipart".Reader) NextPart() (? *@"mime/multipart".Part, ? error)
+	func (@"mime/multipart".r *@"mime/multipart".Reader) ReadForm(@"mime/multipart".maxMemory int64) (@"mime/multipart".f *@"mime/multipart".Form, @"mime/multipart".err error)
+	func (@"mime/multipart".mr *@"mime/multipart".Reader "noescape") @"mime/multipart".isBoundaryDelimiterLine(@"mime/multipart".line []byte) bool
+	type @"net/http".Request struct { Method string; URL *@"net/url".URL; Proto string; ProtoMajor int; ProtoMinor int; Header @"net/http".Header; Body @"io".ReadCloser; ContentLength int64; TransferEncoding []string; Close bool; Host string; Form @"net/url".Values; MultipartForm *@"mime/multipart".Form; Trailer @"net/http".Header; RemoteAddr string; TLS *@"crypto/tls".ConnectionState }
+	func (@"net/http".r *@"net/http".Request "noescape") AddCookie(@"net/http".c *@"net/http".Cookie "noescape")
+	func (@"net/http".r *@"net/http".Request "noescape") Cookie(@"net/http".name string "noescape") (? *@"net/http".Cookie, ? error)
+	func (@"net/http".r *@"net/http".Request "noescape") Cookies() []*@"net/http".Cookie
+	func (@"net/http".r *@"net/http".Request "noescape") FormFile(@"net/http".key string "noescape") (? @"mime/multipart".File, ? *@"mime/multipart".FileHeader, ? error)
+	func (@"net/http".r *@"net/http".Request "noescape") FormValue(@"net/http".key string "noescape") string
+	func (@"net/http".r *@"net/http".Request "noescape") MultipartReader() (? *@"mime/multipart".Reader, ? error)
+	func (@"net/http".r *@"net/http".Request "noescape") ParseForm() error
+	func (@"net/http".r *@"net/http".Request "noescape") ParseMultipartForm(@"net/http".maxMemory int64) error
+	func (@"net/http".r *@"net/http".Request "noescape") ProtoAtLeast(@"net/http".major int, @"net/http".minor int) bool
+	func (@"net/http".r *@"net/http".Request "noescape") Referer() string
+	func (@"net/http".r *@"net/http".Request "noescape") SetBasicAuth(@"net/http".username string "noescape", @"net/http".password string "noescape")
+	func (@"net/http".r *@"net/http".Request "noescape") UserAgent() string
+	func (@"net/http".req *@"net/http".Request) Write(@"net/http".w @"io".Writer) error
+	func (@"net/http".req *@"net/http".Request) WriteProxy(@"net/http".w @"io".Writer) error
+	func (@"net/http".r *@"net/http".Request "noescape") @"net/http".expectsContinue() bool
+	func (@"net/http".r *@"net/http".Request "noescape") @"net/http".multipartReader() (? *@"mime/multipart".Reader, ? error)
+	func (@"net/http".r *@"net/http".Request "noescape") @"net/http".wantsHttp10KeepAlive() bool
+	func (@"net/http".req *@"net/http".Request) @"net/http".write(@"net/http".w @"io".Writer, @"net/http".usingProxy bool, @"net/http".extraHeaders @"net/http".Header "noescape") error
+	type @"".AuthMode interface { AddAuthHeader(@"".req *@"net/http".Request); IsAuthorized(@"".req *@"net/http".Request) bool }
+	var @"".mode @"".AuthMode
+	func @"".FromEnv() (? @"".AuthMode, ? error)
+	func @"".FromConfig(@"".authConfig string) (? @"".AuthMode, ? error)
+	func @"".basicAuth(@"".req *@"net/http".Request "noescape") (? string, ? string, ? error)
+	type @"".UserPass struct { Username string; Password string }
+	func (@"".up *@"".UserPass "noescape") AddAuthHeader(@"".req *@"net/http".Request "noescape")
+	func (@"".up *@"".UserPass "noescape") IsAuthorized(@"".req *@"net/http".Request "noescape") bool
+	type @"".DevAuth struct { Password string }
+	func (@"".da *@"".DevAuth "noescape") AddAuthHeader(@"".req *@"net/http".Request "noescape")
+	func (@"".da *@"".DevAuth "noescape") IsAuthorized(@"".req *@"net/http".Request "noescape") bool
+	func @"".IsAuthorized(@"".req *@"net/http".Request) bool
+	func @"".TriedAuthorization(@"".req *@"net/http".Request "noescape") bool
+	type @"net/http".ResponseWriter interface { Header() @"net/http".Header; Write(? []byte) (? int, ? error); WriteHeader(? int) }
+	func @"".SendUnauthorized(@"".conn @"net/http".ResponseWriter)
+	type @"net/http".Handler interface { ServeHTTP(? @"net/http".ResponseWriter, ? *@"net/http".Request) }
+	type @"".Handler struct { ? @"net/http".Handler }
+	func (@"".h @"".Handler) ServeHTTP(@"".w @"net/http".ResponseWriter, @"".r *@"net/http".Request)
+	type @"github.com/georgerogers42/goweb".Any interface {}
+	type @"github.com/georgerogers42/goweb".Result struct { Final bool; State map[string]@"github.com/georgerogers42/goweb".Any }
+	type @"github.com/georgerogers42/goweb".Responder func(? @"net/http".ResponseWriter, ? *@"net/http".Request, ? @"github.com/georgerogers42/goweb".Result, ? ...string) @"github.com/georgerogers42/goweb".Result
+	func @"".RequireAuth(@"".handler @"github.com/georgerogers42/goweb".Responder) @"github.com/georgerogers42/goweb".Responder
+	var @"".initdone¬∑ uint8
+	func @"".init()
+
+$$  // local types
+
+$$
+
+!
+Ñ y</ Ñ y<home Ñ y<george Ñ y<goprojects Ñ y<src Ñ y<github.com Ñ y<georgerogers42 Ñ y<gologin Ñ y<auth.go 8      Ñ y<encoding Ñ y<base64.a 8     ˇˇˇˇuÑ y<fmt.a 8     ˇˇˇˇuÑ y<github.com Ñ y<georgerogers42 Ñ y<goweb.a 8     ˇˇˇˇuÑ y<net Ñ y<http.a 8     ˇˇˇˇuÑ y<os.a 8     ˇˇˇˇuÑ y<regexp.a 8     ˇˇˇˇuÑ y<strings.a 8     ˇˇˇˇu8 ∑     Ñ q"".FromEnv Ñ qtype.func() ("".AuthMode, error) „ +   ëqE0       uÑ qgo.string."CAMLI_AUTH" ´,   qÑ èos.key ´,   è≤,     ≤,     Ñ qos.Getenv Ñ qtype.func(string) string  ,    ëq´,      èÑ è"".authConfig ´,   è≤,     ≤,     Ñ q"".FromConfig Ñ q	type.func(string) ("".AuthMode, error)  ,    ëq	´,      èÑ t
+""..args ´,   
+tÆ,      u® ,     ≤,     ™ ,     „ 4   ëq	E¿   0   uÑ èstrings.s ´5   èÑ t"".authConfig Ñ qtype.string Æ5   ëtÆ5   ér 5   ï   tr 5      éÑ qgo.string.":" ´5   qÑ èstrings.sep ´5      è≤5     ≤5     Ñ qstrings.Split Ñ qtype.func(string, string) []string  5    ëqÆ5       èÑ s"".pieces Ñ qtype.[]string Æ5   ïêˇˇˇsr 5   (   èr 5   ïòˇˇˇsr 5   ,   èr 5   ïúˇˇˇsr 6   ïòˇˇˇs& 6      uR 6    L   pÑ s"".autotmp_0003 ´7   –ˇˇˇsÆ7   u∆7     ∆7     ´7   –ˇˇˇsÑ s"".autotmp_0001 r 7      uËˇˇˇsr 7      uÏˇˇˇsÆ7   ‡ˇˇˇsÑ qtype.uint8 Ñ èruntime.typ Æ7   ìq xèÑ èruntime.elem ´7      èÆ7   ëtÆ7   ér 7   ï   tr 7      éÑ qruntime.convT2E Ñ qtype.func(*uint8, string) interface {}  7    ëq´7      è´7   ‡ˇˇˇsÆ7   í≤7     ≤7     Ñ t""..noname Æ7   u   tÆ7   u   tÑ qgo.string."Invalid auth string: %q" ´7   qÑ èfmt.format ´7   è≤7     ≤7     Ñ èfmt.a ´7      èÆ7   ‡ˇˇˇsÆ7   ér 7   Ëˇˇˇsr 7      ér 7   Ïˇˇˇsr 7      éÑ qfmt.Errorf Ñ q type.func(string, ...interface {}) error  7    ëq Æ7       èÆ7       tÆ7   (   èÆ7   (   t™ 7     ´9   ïêˇˇˇs& 9      éuT 9    P   pÑ q!runtime.panicindex  9    !qÆ9   éÆ9   éÑ s""".authType Æ9   ïpˇˇˇ"sr 9      ér 9   ïxˇˇˇ"sÑ q#go.string."CAMLI_ADVERTISED_PASSWORD" ´;   #q´;   è≤;     ≤;      ;    ëqÆ;      èÑ s$"".pw Æ;   ï¿ˇˇˇ$sr ;      èr ;   ï»ˇˇˇ$s& ;   uQ ;    t   pÑ q%type."".DevAuth Æ<   ìq %xèÑ q&runtime.new Ñ q'type.func(*uint8) *"".DevAuth  <    ë&q'Æ<      èÆ<   ï¿ˇˇˇ$sÆ<   ãr <   ï»ˇˇˇ$sr <      ãÑ q(type.*"".DevAuth Æ<   ìq (xèÑ q)type."".AuthMode Ñ è*runtime.typ2 Æ<   ìq )x   *èÆ<      èÑ q+runtime.convT2I Ñ q,type.func(*uint8, *uint8, *"".DevAuth) "".AuthMode  <    ë+q,Æ<      èÆ<       èÑ q-"".mode Æ=   ë-q)Æ=      tÆ=   ï   -q)Æ=      tÆ=   u    tÆ=   u(   t™ =     ÆA   ïpˇˇˇ"sr A   ïxˇˇˇ"s& A      uZ A    æ   p´A   èÆA   êr A      êÑ q.go.string."userpass" ´A   .q´A      è≤A     ≤A     Ñ q/runtime.cmpstring Ñ q0type.func(string, string) int  A    ë/q0r A       è& A   uZ A    æ   pr B   ïòˇˇˇs& B      uQ B    ñ   pÆC   u   tÆC   u   tÑ q1go.string."Wrong userpass auth string; needs to be \"userpass:user:password\"" ´C   1q´C   è≤C     ≤C     ´C      èÆC   u∆C     ∆C      C    ëq ÆC       èÆC       tÆC   (   èÆC   (   t™ C     ´E   ïêˇˇˇs& E      é   uT E    ö   p E    !qÆE   éöE      uÆE   éÑ s"".username ÆE   ïÄˇˇˇsr E      ér E   ïàˇˇˇs´F   ïêˇˇˇs& F      é   uT F    §   p F    !qÆF   éöF       uÆF   éÑ s"".password ÆF   ï†ˇˇˇsr F      ér F   ï®ˇˇˇsÑ qtype."".UserPass ÆG   ìq xèÑ qtype.func(*uint8) *"".UserPass  G    ë&qÆG      èÆG   ïÄˇˇˇsÆG   ãr G   ïàˇˇˇsr G      ãÆG   öG      uÆG   ï†ˇˇˇsÆG   ér G   ï®ˇˇˇsr G      éÑ qtype.*"".UserPass ÆG   ìq xèÆG   ìq )x   *èÆG      èÑ qtype.func(*uint8, *uint8, *"".UserPass) "".AuthMode  G    ë+qÆG      èÆG       èY @    Â   pÑ s"".autotmp_0009 ´I   ˇˇˇsÆI   u∆I     ∆I     ´I   ˇˇˇsÑ s"".autotmp_0007 r I      u∏ˇˇˇsr I      uºˇˇˇsÆI   ∞ˇˇˇsÆI   ìq xè´I      èÆI   ïpˇˇˇ"sÆI   ér I   ïxˇˇˇ"sr I      é I    ëq´I      è´I   ∞ˇˇˇsÆI   í≤I     ≤I     ÆI   u   tÆI   u   tÑ q	go.string."Unknown auth type: %q" ´I   	q´I   è≤I     ≤I     ´I      èÆI   ∞ˇˇˇsÆI   ér I   ∏ˇˇˇsr I      ér I   ºˇˇˇsr I      é I    ëq ÆI       èÆI       tÆI   (   èÆI   (   t™ I     ÆK   ë-q)ÆK      tÆK   ï   -q)ÆK      tÆK   u    tÆK   u(   t™ K     Ñ q
+"".basicAuth Ñ qtype.func(*net/http.Request) (string, string, error) „ N   ë
+qEò   8   uÑ t"".req Ñ qtype.*net/http.Request ÆO   ëtÆO   0   êÑ ènet/http.h ÆO   èÑ qgo.string."Authorization" ´O   qÑ ènet/http.key ´O      è≤O     ≤O     Ñ qnet/http.Header.Get  O    q´O      èÆO   ér O      é& P   uZ P      pÑ qgo.string."" ´Q   qÆQ   éÆQ      tr Q      ér Q      tÆQ   éÆQ      tr Q      ér Q       tÑ qgo.string."Missing \"Authorization\" in header" ´Q   q´Q   è≤Q     ≤Q     ´Q      èÆQ   u∆Q     ∆Q      Q    ëq ÆQ       èÆQ   (   tÆQ   (   èÆQ   0   t™ Q     Ñ q"".kBasicAuthPattern Ñ qtype.*regexp.Regexp ÆS   ëqÑ èregexp.re ÆS   èÑ èregexp.s ´S      èÆS   êr S      êÑ qregexp.(*Regexp).FindStringSubmatch  S    q´S      èÆS   éÑ s"".matches Ñ qtype.[]string ÆS   ï¿ˇˇˇsr S      ér S   ï»ˇˇˇsr S      ér S   ïÃˇˇˇsr T   ï»ˇˇˇs& T      uQ T    8  p´U   qÆU   éÆU      tr U      ér U      tÆU   éÆU      tr U      ér U       tÑ qgo.string."Bogus Authorization header" ´U   q´U   è≤U     ≤U     ´U      èÆU   u∆U     ∆U      U    ëq ÆU       èÑ t""..noname ÆU   (   tÆU   (   èÆU   0   t™ U     ´W   ï¿ˇˇˇs& W      é   uT W    <  p W    !qÆW   éöW      uÆW   éÑ s"".encoded Ñ qtype.string ÆW   ï®ˇˇˇsr W      éÑ qencoding/base64.StdEncoding Ñ q type.*encoding/base64.Encoding ÆX   ëq Ñ s!"".enc ÆY   ï∏ˇˇˇ!s Ñ è"encoding/base64.enc ÆY   "èr Y   ï∞ˇˇˇsÑ è#encoding/base64.n r Y      #èÑ q$encoding/base64.(*Encoding).DecodedLen  Y    $qr Y      èÑ q%type.[]uint8 Ñ q&type.uint8 Ñ è'runtime.typ ÆY   ìq %x&'èØY   Ñ è(runtime.nel ÆY      (èØY   Ñ è)runtime.cap ÆY      )èÑ q*runtime.makeslice Ñ q+type.func(*uint8, int64, int64) []uint8  Y    ë*q+ÆY      èÑ s,"".decBuf ÆY   ï‡ˇˇˇ,s%r Y       èr Y   ïËˇˇˇ,s%r Y   $   èr Y   ïÏˇˇˇ,s%´Z   èÆZ   ï®ˇˇˇsÆZ   ér Z   ï∞ˇˇˇsr Z      éÑ q-runtime.stringtoslicebyte Ñ q.type.func(string) []uint8  Z    ë-q.´Z      èÑ è/encoding/base64.src ´Z      /è◊ Z     öZ      uöZ      uÆZ      u® Z     ≤Z     ! Z     ÆZ   ï∏ˇˇˇ!s ÆZ   "èÑ è0encoding/base64.dst ´Z      0èÆZ   ï‡ˇˇˇ,s%ÆZ   ér Z   ïËˇˇˇ,s%r Z      ér Z   ïÏˇˇˇ,s%r Z      éÑ q1encoding/base64.(*Encoding).Decode  Z    1qr Z   ïÏˇˇˇ,s%r Z   (   #èÑ èencoding/base64.err ´Z   0   èÆZ   éÑ s"".err Ñ qtype.error ÆZ   ï–ˇˇˇsÆZ      éÆZ   ïÿˇˇˇs´[   ï–ˇˇˇs¢[   éuQ [    Ö  p´\   qÆ\   éÆ\      tr \      ér \      tÆ\   éÆ\      tr \      ér \       tÆ\   ï–ˇˇˇsÆ\   (   tÆ\   ïÿˇˇˇsÆ\   0   t™ \     Ø^   ∞^   Å%¢^   V ^    ä  pÑ qruntime.panicslice  ^    qr ^   Æ^   ï‡ˇˇˇ,s%´^   èÆ^   ér ^      ér ^      éÑ qruntime.slicebytetostring Ñ qtype.func([]uint8) string  ^    ëq´^      èÑ èstrings.s ´^   è≤^     ≤^     Ñ qgo.string.":" ´^   qÑ è	strings.sep ´^      	è≤^     ≤^     Ñ è
+strings.n r ^      u    
+èÑ qstrings.SplitN Ñ qtype.func(string, string, int) []string  ^    ëqÆ^   (   èÑ s"".pieces Æ^   ïˇˇˇsr ^   0   èr ^   ï¯ˇˇˇsr ^   4   èr ^   ï¸ˇˇˇsr _   ï¯ˇˇˇs& _      uQ _    ª  p´`   qÆ`   éÆ`      tr `      ér `      tÆ`   éÆ`      tr `      ér `       tÑ qgo.string."didn't get two pieces" ´`   qÑ èfmt.format ´`   è≤`     ≤`     Ñ èfmt.a ´`      èÆ`   u∆`     ∆`     Ñ qfmt.Errorf Ñ qtype.func(string, ...interface {}) error  `    ëqÆ`       èÆ`   (   tÆ`   (   èÆ`   0   t™ `     ´b   ïˇˇˇs& b      éuT b    ø  pÑ qruntime.panicindex  b    qÆb   éÆb   éÆb      tr b      ér b      t´b   ïˇˇˇs& b      é   uT b    »  p b    qÆb   éöb      uÆb   éÆb      tr b      ér b       tÆb   u(   tÆb   u0   t™ b     Ñ q"".(*UserPass).IsAuthorized Ñ qtype.method(*"".UserPass) func(*net/http.Request) bool „ k   ëqEX      uÑ t"".req Ñ qtype.*net/http.Request Æl   ï   tÑ è"".req Æl   èÑ q"".basicAuth Ñ qtype.func(*net/http.Request) (string, string, error)  l    ëq´l      èÆl   ér l      é´l      èÆl   éÑ s"".pass Æl   ï‡ˇˇˇsr l      ér l   ïËˇˇˇs´l   (   èÆl   éÆl   ïˇˇˇsÆl      éÆl   ï¯ˇˇˇs´m   ïˇˇˇs¢m   éuQ m    Á  pq n   u   t™ n     Ñ t"".up Ñ qtype.*"".UserPass Æp   ëtÆp   ér p      éY p    Ì  pq p      uY p    ˇ  p& p   Z p    ˚  p´p   èÆp   êr p      ê´p      èÆp   êr p      êÑ qruntime.cmpstring Ñ qtype.func(string, string) int  p    ëqÑ q type.string r p   ïËˇˇˇs r p       è& p   uZ p    ˚  pY p    Î  pq p   uY p    ˇ  pÑ t!""..noname q p      u   !tY p      p% p   uQ p      pÆp   ëtöp      uÆp   ér p      é& p   Z p      p´p   èÆp   ï‡ˇˇˇs Æp   êr p      ê´p      èÆp   êr p      ê p    ëqr p       è& p   uZ p      pY p    ˝  pq p   u   !t™ p     Ñ q""".(*UserPass).AddAuthHeader Ñ q#type.method(*"".UserPass) func(*net/http.Request) „ s   ë"q#E(      uÆs   ëtÑ t$"".req Æt   ï   $tÑ è%net/http.r Æt   %èÆt   ÅÑ è&net/http.username ´t      &è≤t     ≤t     Æt   Åöt      uÑ è'net/http.password ´t      'è≤t     ≤t     Ñ q(net/http.(*Request).SetBasicAuth  t    (q™ u     Ñ q)"".(*DevAuth).IsAuthorized Ñ q*type.method(*"".DevAuth) func(*net/http.Request) bool „ }   ë)q*EH      uÆ~   ï   $tÑ è+"".req Æ~   +è ~    ëq´~      èÆ~   ér ~      é´~   (   èÆ~   éÆ~   ïˇˇˇsÆ~      éÆ~   ï¯ˇˇˇs´   ïˇˇˇs¢   éuQ     5  pq Ä   u   !t™ Ä     Ñ t,"".da Ñ q-type.*"".DevAuth ÆÇ   ë,t-ÆÇ   ér Ç      éY Ç    ;  pq Ç      u   !tY Ç    I  p& Ç   Z Ç    H  p´Ç   èÆÇ   êr Ç      ê´Ç      èÆÇ   êr Ç      ê Ç    ëqr Ç       è& Ç   uZ Ç    H  pY Ç    9  pq Ç   u   !t™ Ç     Ñ q."".(*DevAuth).AddAuthHeader Ñ q/type.method(*"".DevAuth) func(*net/http.Request) „ Ö   ë.q/E(      uÑ t0"".req ÆÜ   ï   0tÆÜ   %èÑ q1go.string."" ´Ü   1q´Ü      &è≤Ü     ≤Ü     ÆÜ   ë,t-´Ü      'è≤Ü     ≤Ü      Ü    (q™ á     Ñ q"".IsAuthorized Ñ qtype.func(*net/http.Request) bool „ â   ëqE      uÆä   ë0tÑ è"".req Æä      èÑ q"".mode Ñ qtype."".AuthMode ´ä   ëqÆä      éÆä   èÆä   éÆä   (   é ä    q ä      èq ä      !t™ ä     Ñ q"".TriedAuthorization „ ç   ëqE(      uY ê    g  pq ê      u   !tY ê    t  pÑ t"".req Æê   ëtÆê   0   êÑ ènet/http.h Æê   èÑ q	go.string."Authorization" ´ê   	qÑ è
+net/http.key ´ê      
+è≤ê     ≤ê     Ñ qnet/http.Header.Get  ê    q´ê      èr ê      é& ê   uZ ê    e  pq ê   u   !t™ ê     Ñ q"".SendUnauthorized Ñ qtype.func(net/http.ResponseWriter) „ ì   ëqEÄ      uÑ qgo.string."gwiki" ´î   qÆî   éÑ s"".realm Æî   ïËˇˇˇs r î      ér î   ïˇˇˇs Ñ qtype.uint8 Ñ èruntime.typ Æï   ìq -xèÑ èruntime.iface ´ï      èÆï   ëqÆï   éÆï   ï   qÆï      éÑ qruntime.assertI2T2 Ñ qtype.func(*uint8, "".AuthMode) (*"".DevAuth, bool)  ï    ëqÆï   ïËˇˇˇs r ï   ïˇˇˇs Ñ èruntime.ret Æï      èÆï   Å-Ñ èruntime.ok q ï       èÑ qtype.bool q ï   Å% ï   ÅuQ ï    ñ  pr ñ      uèÑ qgo.string."Any username, password is: " ´ñ   q´ñ      è≤ñ     ≤ñ     Æñ   Å-´ñ      è≤ñ     ≤ñ     Ñ qruntime.concatstring Ñ qtype.func(int, string, string) string  ñ    ëqÆñ   (   èr ñ   0   èÑ s"".autotmp_0018 ´ò   »ˇˇˇsÆò   u∆ò     ∆ò     ´ò   »ˇˇˇsÑ s"".autotmp_0016 r ò      u‡ˇˇˇsr ò      u‰ˇˇˇsÆò   ÿˇˇˇsÆò   ìq  xèÑ èruntime.elem ´ò      èÆò   ér ò      éÑ qruntime.convT2E Ñ qtype.func(*uint8, string) interface {}  ò    ëq´ò      è´ò   ÿˇˇˇsÆò   í≤ò     ≤ò     Ñ t "".conn Ñ q!type.net/http.ResponseWriter ´ò   ë t!Æò      éÆò   èÆò   éÆò       é ò    Æò      èÑ s""".autotmp_0019 Æò   ¯ˇˇˇ"sÑ q#go.string."Basic realm=%q" ´ò   #qÑ è$fmt.format ´ò   $è≤ò     ≤ò     Ñ è%fmt.a ´ò      %èÆò   ÿˇˇˇsÆò   ér ò   ‡ˇˇˇsr ò      ér ò   ‰ˇˇˇsr ò      éÑ q&fmt.Sprintf Ñ q'type.func(string, ...interface {}) string  ò    ë&q'´ò       èÑ è(net/http.value ´ò      (è≤ò     ≤ò     Æò   ¯ˇˇˇ"sÆò   èÑ q)go.string."WWW-Authenticate" ´ò   )q´ò      
+è≤ò     ≤ò     Ñ q*net/http.Header.Set  ò    *qr ô   ë  u   è´ô   ë t!Æô      éÆô   èÆô   éÆô   0   é ô    Ñ q+type.io.Writer Æö   ìq +xè´ö      èÆö   ë t!Æö   éÆö   ï    t!Æö      éÑ q,runtime.convI2I Ñ q-type.func(*uint8, net/http.ResponseWriter) io.Writer  ö    ë,q-´ö      èÑ è.fmt.w ´ö   .è≤ö     ≤ö     Ñ q/go.string."<h1>Unauthorized</h1>" ´ö   /q´ö      $è≤ö     ≤ö     ´ö       %èÆö   u∆ö     ∆ö     Ñ q0fmt.Fprintf Ñ q1type.func(io.Writer, string, ...interface {}) (int, error)  ö    ë0q1™ õ     Ñ q"".Handler.ServeHTTP Ñ qtype.method("".Handler) func(net/http.ResponseWriter, *net/http.Request) „ °   ëqE0   (   uÑ t"".r Ñ qtype.*net/http.Request Æ¢   ï    tÑ è"".req Æ¢      èÑ q"".mode Ñ qtype."".AuthMode ´¢   ëqÆ¢      éÆ¢   èÆ¢   éÆ¢   (   é ¢    Ñ t"".w Æ¢   ï   t!Æ¢   ï   t!q ¢      è% ¢   uQ ¢      pÑ t	"".h Ñ q
+type."".Handler ´£   ë	t
+Æ£   éÑ s"".autotmp_0020 Æ£   ˇˇˇsÆ£      éÆ£   ¯ˇˇˇs´£      èÆ£   éÆ£      éÆ£   ï    tÆ£      è´£   ˇˇˇsÆ£      éÆ£   èÆ£   éÆ£       é £    Y ¢      pÑ è"".conn ´•   èÆ•   éÆ•      éÑ q"".SendUnauthorized Ñ qtype.func(net/http.ResponseWriter)  •    ëq™ ß     Ñ q"".RequireAuth Ñ qtype.func(github.com/georgerogers42/goweb.Responder) github.com/georgerogers42/goweb.Responder „ ´   ëqE       uÑ qtype.github.com/georgerogers42/goweb.Responder Ñ qtype.uint8 Ñ èruntime.typ Æ´   ìq xèÑ qruntime.new Ñ qtype.func(*uint8) *github.com/georgerogers42/goweb.Responder  ´    ëqÆ´      èÑ t"".handler Æ´   tÆ´   ãr ¨      uèÑ q""._func_001 Ñ qtype.func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result Æ¨   ìq xÆ¨      èÆ¨      èÑ qruntime.closure Ñ qtype.func(int, func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result, *github.com/georgerogers42/goweb.Responder) func(net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result  ¥    ëqÆ¥      èÑ t""..noname Æ¥      t™ ¥     Ñ q"".init Ñ qtype.func() „ µ   ëq   uÑ q"".initdone¬∑ q µ   ëqq µ   Å% µ   uQ µ      pq µ   Å% µ      uZ µ      p™ µ     Ñ qruntime.throwinit  µ    ëqq µ      uëqÑ q strings.init  µ    ë qÑ q!os.init  µ    ë!qÑ q"net/http.init  µ    ë"qÑ q#github.com/georgerogers42/goweb.init  µ    ë#qÑ q$regexp.init  µ    ë$qÑ q%fmt.init  µ    ë%qÑ q&encoding/base64.init  µ    ë&qÑ q'go.string."^Basic ([a-zA-Z0-9\\+/=]+)" ´   'qÑ è(regexp.str ´   (è≤     ≤     Ñ q)regexp.MustCompile Ñ q*type.func(string) *regexp.Regexp      ë)q*Æ      èÑ q+"".kBasicAuthPattern Ñ q,type.*regexp.Regexp Æ   ë+q,q µ      uëq™ µ     „ ¨   ëqEH   X   uÑ t-"".req Æ≠   ï    -tÑ è."".req Æ≠      .è´≠   ëqÆ≠      éÆ≠   èÆ≠   éÆ≠   (   é ≠    Ñ t/"".conn Ñ q0type.net/http.ResponseWriter Æ≠   ï   /t0Æ≠   ï   /t0q ≠      è% ≠   uQ ≠    V  p´Æ   èÆÆ   éÆÆ      éÑ t1"".req ÆÆ   ï    1tÆÆ      èÑ t"".s Ñ qtype.github.com/georgerogers42/goweb.Result ´Æ   ï(   t´Æ      è≤Æ     ≤Æ     ´Æ   (   èÑ t"".strs Ñ qtype.[]string ÆÆ   ï8   tÆÆ   ér Æ   ï@   tr Æ      ér Æ   ïD   tr Æ      éÑ t"".&handler ÆÆ   tÆÆ   é Æ    ´Æ   8   è´Æ   ï(   t≤Æ     ≤Æ     Y ≠    \  pÑ è"".conn ´∞   èÆ∞   éÆ∞      é ∞    ëqq ±      uq ±   ï(   t´≥   ï(   t´≥   H   t≤≥     ≤≥     ™ ≥     Ñ q"".AuthMode.AddAuthHeader Ñ qtype.func("".AuthMode, *net/http.Request) „    ëqE      uÑ q	type.*net/http.Request Æ   ï   1t	Ñ è
+"".req Æ      
+èÑ t""..this Ñ qtype."".AuthMode ´   ëtÆ      éÆ   èÆ   éÆ       é     ™      Ñ q"".AuthMode.IsAuthorized Ñ qtype.func("".AuthMode, *net/http.Request) bool „    ëqE       uÑ t"".req Æ   ï   t	Ñ è"".req Æ      è´   ëtÆ      éÆ   èÆ   éÆ   (   é     q       èq       t™      Ñ qtype..hash."".UserPass Ñ qtype.func(*uintptr, uintptr, *"".UserPass) „    ìoqE      uÑ t"".h Ñ qtype.*uintptr Æ   ëtÆ   èÆ      u   èÑ t"".p Ñ qtype.*"".UserPass Æ   ï   tÆ      èÑ qruntime.strhash Ñ qtype.func(*uintptr, uintptr, *string)      ëqÆ   ëtÆ   èÆ      u   èÆ   ï   tÆ      èö      u   è     ëq™      Ñ qtype..eq."".UserPass Ñ qtype.func(*bool, uintptr, *"".UserPass, *"".UserPass) „    ìoqE(       uÆ   ï   tÆ   ér       éÑ t"".q Æ   ï   tÆ   ér       é&    Z     ö  p´   èÆ   êr       ê´      èÆ   êr       êÑ qruntime.cmpstring Ñ qtype.func(string, string) int      ëqr        è&    uZ     ö  pY     ù  pÑ t"".eq Ñ qtype.*bool Æ   ëtq    ué™      Æ   ï   tö      uÆ   ér       éÆ   ï   tö      uÆ   ér       é&    Z     ≤  p´   èÆ   êr       ê´      èÆ   êr       ê     ëqr        è&    uZ     ≤  pY     µ  pÆ   ëtq    ué™      Æ   ëtq       ué™      Ñ q "".(*Handler).ServeHTTP Ñ q!type.func(*"".Handler, net/http.ResponseWriter, *net/http.Request) „    ë q!E0       uÑ q"type.*"".Handler Æ   ët"Æ   u¢   Z        pÑ q#go.string."gologin" ´   #q´   è≤     ≤     Ñ q$go.string."Handler" ´   $q´      è≤     ≤     Ñ q%go.string."ServeHTTP" ´   %q´       è≤     ≤     Ñ q&runtime.panicwrap Ñ q'type.func(string, string, string)      ë&q'Æ   ët"Ñ è("".h ´   (è≤     ≤     Ñ è)"".w ´      )èÑ t*"".w Æ   ï   *t0Æ   éÆ   ï   *t0Æ      éÑ t+"".r Æ   ï   +t	Ñ è,"".r Æ       ,èÑ q-"".Handler.ServeHTTP      -q™      Ñ q.go.string."CAMLI_AUTH" - ,   o.qq    .x- ,   o   .q
+   u- ,   o   .q CAMLI_AU- ,   o   .q TH      - ,   o   .qu6 ,   o
+.q   uÑ q/go.string.":" - 5   o/qq    /x- 5   o   /q   u- 5   o   /q :       - 5   o   /qu6 5   o
+/q   uÑ q0go.string."Invalid auth string: %q" - 7   o0qq    0x- 7   o   0q   u- 7   o   0q Invalid - 7   o   0q auth str- 7   o   0q ing: %q - 7   o#   0qu6 7   o
+0q(   uÑ q1go.string."CAMLI_ADVERTISED_PASSWORD" - ;   o1qq    1x- ;   o   1q   u- ;   o   1q CAMLI_AD- ;   o   1q VERTISED- ;   o   1q _PASSWOR- ;   o$   1q D       - ;   o%   1qu6 ;   o
+1q(   uÑ qgo.string."userpass" - A   oqq    x- A   o   q   u- A   o   q userpass- A   o   qu6 A   o
+q   uÑ qgo.string."Wrong userpass auth string; needs to be \"userpass:user:password\"" - C   oqq    x- C   o   q@   u- C   o   q Wrong us- C   o   q erpass a- C   o   q uth stri- C   o$   q ng; need- C   o,   q s to be - C   o4   q "userpas- C   o<   q s:user:p- C   oD   q assword"- C   oL   qu6 C   o
+qP   uÑ qgo.string."Unknown auth type: %q" - I   oqq    x- I   o   q   u- I   o   q Unknown - I   o   q auth typ- I   o   q e: %q   - I   o!   qu6 I   o
+q(   uÑ qgo.string."Authorization" - O   oqq    x- O   o   q   u- O   o   q Authoriz- O   o   q ation   - O   o   qu6 O   o
+q    uÑ qgo.string."" - Q   oqq    x- Q   o   qu- Q   o   qu6 Q   o
+q   uÑ qgo.string."Missing \"Authorization\" in header" - Q   oqq    x- Q   o   q!   u- Q   o   q Missing - Q   o   q "Authori- Q   o   q zation" - Q   o$   q in heade- Q   o,   q r       - Q   o-   qu6 Q   o
+q0   uÑ qgo.string."Bogus Authorization header" - U   oqq    x- U   o   q   u- U   o   q Bogus Au- U   o   q thorizat- U   o   q ion head- U   o$   q er      - U   o&   qu6 U   o
+q(   uÑ qgo.string."didn't get two pieces" - `   oqq    x- `   o   q   u- `   o   q didn't g- `   o   q et two p- `   o   q ieces   - `   o!   qu6 `   o
+q(   uÑ q	go.string."gwiki" - î   o	qq    	x- î   o   	q   u- î   o   	q gwiki   - î   o   	qu6 î   o
+	q   uÑ q
+go.string."Any username, password is: " - ñ   o
+qq    
+x- ñ   o   
+q   u- ñ   o   
+q Any user- ñ   o   
+q name, pa- ñ   o   
+q ssword i- ñ   o$   
+q s:      - ñ   o'   
+qu6 ñ   o
+
+q(   uÑ qgo.string."Basic realm=%q" - ò   oqq    x- ò   o   q   u- ò   o   q Basic re- ò   o   q alm=%q  - ò   o   qu6 ò   o
+q    uÑ qgo.string."WWW-Authenticate" - ò   oqq    x- ò   o   q   u- ò   o   q WWW-Auth- ò   o   q enticate- ò   o   qu6 ò   o
+q    uÑ qgo.string."<h1>Unauthorized</h1>" - ö   oqq    x- ö   o   q   u- ö   o   q <h1>Unau- ö   o   q thorized- ö   o   q </h1>   - ö   o!   qu6 ö   o
+q(   uÑ qgo.string."^Basic ([a-zA-Z0-9\\+/=]+)" -    oqq    x-    o   q   u-    o   q ^Basic (-    o   q [a-zA-Z0-    o   q -9\+/=]+-    o$   q )       -    o%   qu6    o
+q(   uÑ q"".kBasicAuthPattern Ñ qtype.*regexp.Regexp 6    ëq     uÑ q"".mode Ñ qtype."".AuthMode 6     ëq     uÑ q"".initdone¬∑ Ñ qtype.uint8 6 µ   ëq     uÑ qtype.func(*net/http.Request) Ñ qtype.*runtime.FuncType -    oqq x-    o   qq    x-    o   q   u-    o   qE$Iî    u-    o   qu-    o   q   u-    o   q   u-    o   q   uÑ qruntime.algarray -    o    qq ¿   xÑ qgo.string."func(*http.Request)" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(*ht-    o   q tp.Reque-    o   q st)     -    o   qu6    o
+q    uÑ qweak.type.*func(*net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq p   x-    o`   qu-    od   quÑ qtype.*net/http.Request -    oh   qq x6    o
+qp   uÑ qtype.func(*net/http.Request) bool -    oqq x-    o   qq    x-    o   q   u-    o   qEeˇ¿¨    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(*http.Request) bool" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(*ht-    o   q tp.Reque-    o   q st) bool-    o$   qu6    o
+q(   uÑ qweak.type.*func(*net/http.Request) bool -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq p   x-    o`   q   u-    od   q   u-    oh   qq xÑ qtype.bool -    op   qq x6    o
+qx   uÑ qtype.*"".AuthMode Ñ q type.*runtime.PtrType -    oqq  x-    o   qq    x-    o   q   u-    o   q1P$u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq Ä   xÑ q!go.string."*gologin.AuthMode" -    o(   qq !x-    o!qq    !x-    o   !q   u-    o   !q *gologin-    o   !q .AuthMod-    o   !q e       -    o   !qu6    o
+!q    uÑ q"weak.type.**"".AuthMode -    o8   qq "x-    o@   qq x6    oqH   uÑ q#type.*runtime.InterfaceType -    oqq #x-    o   qq    x-    o   q   u-    o   q›f◊nu-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq †  xÑ q$go.string."gologin.AuthMode" -    o(   qq $x-    o$qq    $x-    o   $q   u-    o   $q gologin.-    o   $q AuthMode-    o   $qu6    o
+$q    u-    o8   qq x-    o@   qq P   x-    oH   q   u-    oL   q   uÑ q%go.string."AddAuthHeader" -    oP   qq %x-    o%qq    %x-    o   %q   u-    o   %q AddAuthH-    o   %q eader   -    o   %qu6    o
+%q    u-    oX   qu-    o`   qq xÑ q&go.string."IsAuthorized" -    oh   qq &x-    o&qq    &x-    o   &q   u-    o   &q IsAuthor-    o   &q ized    -    o   &qu6    o
+&q    u-    op   qu-    ox   qq x-    o0   qq Ä   xÑ q'go.string."AuthMode" -    oÄ   qq 'x-    o'qq    'x-    o   'q   u-    o   'q AuthMode-    o   'qu6    o
+'q   uÑ q(go.importpath."". -    oà   qq (x-    oê   qq †   x-    oò   qu-    oú   qu6    oq†   uÑ q)type.func() ("".AuthMode, error) -    o)qq x-    o   )qq    )x-    o   )q   u-    o   )qà÷æu-    o   )qu-    o   )q   u-    o   )q   u-    o   )q   u-    o    )qq @  xÑ q*go.string."func() (gologin.AuthMode, error)" -    o(   )qq *x-    o*qq    *x-    o   *q    u-    o   *q func() (-    o   *q gologin.-    o   *q AuthMode-    o$   *q , error)-    o,   *qu6    o
+*q0   uÑ q+weak.type.*func() ("".AuthMode, error) -    o8   )qq +x-    o@   )qu-    oH   )qq h   )x-    oP   )qu-    oT   )qu-    oX   )qq h   )x-    o`   )q   u-    od   )q   u-    oh   )qq xÑ q,type.error -    op   )qq ,x6    o
+)qx   uÑ q-type.func(string) string -    o-qq x-    o   -qq    -x-    o   -q   u-    o   -qEM¸®Á    u-    o   -qu-    o   -q   u-    o   -q   u-    o   -q   u-    o    -qq @  xÑ q.go.string."func(string) string" -    o(   -qq .x-    o.qq    .x-    o   .q   u-    o   .q func(str-    o   .q ing) str-    o   .q ing     -    o   .qu6    o
+.q    uÑ q/weak.type.*func(string) string -    o8   -qq /x-    o@   -qu-    oH   -qq h   -x-    oP   -q   u-    oT   -q   u-    oX   -qq p   -x-    o`   -q   u-    od   -q   uÑ q0type.string -    oh   -qq 0x-    op   -qq 0x6    o
+-qx   uÑ q1type.func(string) ("".AuthMode, error) -    o1qq x-    o   1qq    1x-    o   1q   u-    o   1qÜ[§Fu-    o   1qu-    o   1q   u-    o   1q   u-    o   1q   u-    o    1qq @  xÑ qgo.string."func(string) (gologin.AuthMode, error)" -    o(   1qq x-    oqq    x-    o   q&   u-    o   q func(str-    o   q ing) (go-    o   q login.Au-    o$   q thMode, -    o,   q error)  -    o2   qu6    o
+q8   uÑ qweak.type.*func(string) ("".AuthMode, error) -    o8   1qq x-    o@   1qu-    oH   1qq h   1x-    oP   1q   u-    oT   1q   u-    oX   1qq p   1x-    o`   1q   u-    od   1q   u-    oh   1qq 0x-    op   1qq x-    ox   1qq ,x6    o
+1qÄ   uÑ qtype.*"".DevAuth -    oqq  x-    o   qq    x-    o   q   u-    o   qwØju-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq Ä   xÑ qgo.string."*gologin.DevAuth" -    o(   qq x-    oqq    x-    o   q   u-    o   q *gologin-    o   q .DevAuth-    o   qu6    o
+q    uÑ qweak.type.**"".DevAuth -    o8   qq xÑ qtype."".DevAuth -    o@   qq x-    o0   qq H   xÑ qtype.func(*"".DevAuth, *net/http.Request) -    oqq x-    o   qq    x-    o   q   u-    o   qÀå´u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(*gologin.DevAuth, *http.Request)" -    o(   qq x-    oqq    x-    o   q%   u-    o   q func(*go-    o   q login.De-    o   q vAuth, *-    o$   q http.Req-    o,   q uest)   -    o1   qu6    o
+q8   uÑ q	weak.type.*func(*"".DevAuth, *net/http.Request) -    o8   qq 	x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   qu-    oh   qq x-    op   qq x6    o
+qx   uÑ q
+type.func(*"".DevAuth, *net/http.Request) bool -    o
+qq x-    o   
+qq    
+x-    o   
+q   u-    o   
+qEq˜∞    u-    o   
+qu-    o   
+q   u-    o   
+q   u-    o   
+q   u-    o    
+qq ¿   xÑ qgo.string."func(*gologin.DevAuth, *http.Request) bool" -    o(   
+qq x-    oqq    x-    o   q*   u-    o   q func(*go-    o   q login.De-    o   q vAuth, *-    o$   q http.Req-    o,   q uest) bo-    o4   q ol      -    o6   qu6    o
+q8   uÑ qweak.type.*func(*"".DevAuth, *net/http.Request) bool -    o8   
+qq x-    o@   
+qu-    oH   
+qq h   
+x-    oP   
+q   u-    oT   
+q   u-    oX   
+qq x   
+x-    o`   
+q   u-    od   
+q   u-    oh   
+qq x-    op   
+qq x-    ox   
+qq x6    o
+
+qÄ   u-    oH   qu-    oP   qu-    oX   qq h   x-    o`   q   u-    od   q   u-    oh   qq %x-    op   qu-    ox   qq x-    oÄ   qq xÑ q"".(*DevAuth).AddAuthHeader -    oà   qq x-    oê   qq x-    oò   qq &x-    o†   qu-    o®   qq x-    o∞   qq 
+xÑ q"".(*DevAuth).IsAuthorized -    o∏   qq x-    o¿   qq x6    oq»   uÑ qtype.*runtime.StructType -    oqq x-    o   qq    x-    o   q   u-    o   qa†Fu-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq Ä  xÑ qgo.string."gologin.DevAuth" -    o(   qq x-    oqq    x-    o   q   u-    o   q gologin.-    o   q DevAuth -    o   qu6    o
+q    u-    o8   qq x-    o@   qq P   x-    oH   q   u-    oL   q   uÑ qgo.string."Password" -    oP   qq x-    oqq    x-    o   q   u-    o   q Password-    o   qu6    o
+q   u-    oX   qu-    o`   qq 0x-    oh   qu-    op   qu-    o0   qq x   xÑ qgo.string."DevAuth" -    ox   qq x-    oqq    x-    o   q   u-    o   q DevAuth -    o   qu6    o
+q   u-    oÄ   qq (x-    oà   qq ò   x-    oê   qu-    oî   qu6    oqò   uÑ qtype..alg."".UserPass Ñ qtype..hash."".UserPass -    oqq xÑ qtype..eq."".UserPass -    o   qq xÑ qruntime.memprint -    o   qq xÑ qruntime.memcopy -    o   qq x6    o
+q    uÑ qtype.*"".UserPass -    oqq  x-    o   qq    x-    o   q   u-    o   qÃê&u-    o   qu-    o   q   u-    o   q   u-    o   q   uÑ qruntime.algarray -    o    qq Ä   xÑ qgo.string."*gologin.UserPass" -    o(   qq x-    oqq    x-    o   q   u-    o   q *gologin-    o   q .UserPas-    o   q s       -    o   qu6    o
+q    uÑ qweak.type.**"".UserPass -    o8   qq xÑ qtype."".UserPass -    o@   qq x-    o0   qq H   xÑ qtype.func(*"".UserPass, *net/http.Request) Ñ qtype.*runtime.FuncType -    oqq x-    o   qq    x-    o   q   u-    o   qEgj∂    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(*gologin.UserPass, *http.Request)" -    o(   qq x-    oqq    x-    o   q&   u-    o   q func(*go-    o   q login.Us-    o   q erPass, -    o$   q *http.Re-    o,   q quest)  -    o2   qu6    o
+q8   uÑ q weak.type.*func(*"".UserPass, *net/http.Request) -    o8   qq  x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   qu-    oh   qq xÑ q!type.*net/http.Request -    op   qq !x6    o
+qx   uÑ q"type.func(*"".UserPass, *net/http.Request) bool -    o"qq x-    o   "qq    "x-    o   "q   u-    o   "qE¢.£Æ    u-    o   "qu-    o   "q   u-    o   "q   u-    o   "q   u-    o    "qq ¿   xÑ q#go.string."func(*gologin.UserPass, *http.Request) bool" -    o(   "qq #x-    o#qq    #x-    o   #q+   u-    o   #q func(*go-    o   #q login.Us-    o   #q erPass, -    o$   #q *http.Re-    o,   #q quest) b-    o4   #q ool     -    o7   #qu6    o
+#q8   uÑ q$weak.type.*func(*"".UserPass, *net/http.Request) bool -    o8   "qq $x-    o@   "qu-    oH   "qq h   "x-    oP   "q   u-    oT   "q   u-    oX   "qq x   "x-    o`   "q   u-    od   "q   u-    oh   "qq x-    op   "qq !xÑ q%type.bool -    ox   "qq %x6    o
+"qÄ   u-    oH   qu-    oP   qu-    oX   qq h   x-    o`   q   u-    od   q   uÑ q&go.string."AddAuthHeader" -    oh   qq &x-    op   quÑ q'type.func(*net/http.Request) -    ox   qq 'x-    oÄ   qq xÑ q("".(*UserPass).AddAuthHeader -    oà   qq (x-    oê   qq (xÑ q)go.string."IsAuthorized" -    oò   qq )x-    o†   quÑ q*type.func(*net/http.Request) bool -    o®   qq *x-    o∞   qq "xÑ q+"".(*UserPass).IsAuthorized -    o∏   qq +x-    o¿   qq +x6    oq»   u-    oqq x-    o   qq    x-    o   q    u-    o   qE8áÂª    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq xÑ q,go.string."gologin.UserPass" -    o(   qq ,x-    o,qq    ,x-    o   ,q   u-    o   ,q gologin.-    o   ,q UserPass-    o   ,qu6    o
+,q    u-    o8   qq x-    o@   qq P   x-    oH   q   u-    oL   q   uÑ q-go.string."Username" -    oP   qq -x-    o-qq    -x-    o   -q   u-    o   -q Username-    o   -qu6    o
+-q   u-    oX   qu-    o`   qq 0x-    oh   qu-    op   qu-    ox   qq x-    oÄ   qu-    oà   qq 0x-    oê   qu-    oò   q   u-    o0   qq †   xÑ q.go.string."UserPass" -    o†   qq .x-    o.qq    .x-    o   .q   u-    o   .q UserPass-    o   .qu6    o
+.q   uÑ q/go.importpath."". -    o®   qq /x-    o∞   qq ¿   x-    o∏   qu-    oº   qu6    oq¿   uÑ q0type.[]string Ñ q1type.*runtime.SliceType -    o0qq 1x-    o   0qq    0x-    o   0q   u-    o   0q”®Û
+u-    o   0qu-    o   0q   u-    o   0q   u-    o   0q   u-    o    0qq ‡  xÑ qgo.string."[]string" -    o(   0qq x-    oqq    x-    o   q   u-    o   q []string-    o   qu6    o
+q   uÑ qweak.type.*[]string -    o8   0qq xÑ qtype.string -    o@   0qq x6    o
+0qH   uÑ qtype.func(string, string) []string -    oqq x-    o   qq    x-    o   q   u-    o   qE.…ó˚    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(string, string) []string" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(str-    o   q ing, str-    o   q ing) []s-    o$   q tring   -    o)   qu6    o
+q0   uÑ qweak.type.*func(string, string) []string -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq x-    ox   qq 0x6    o
+qÄ   uÑ qtype.interface {} Ñ qtype.*runtime.InterfaceType -    oqq x-    o   qq    x-    o   q   u-    o   qÁW†u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿  xÑ q	go.string."interface {}" -    o(   qq 	x-    o	qq    	x-    o   	q   u-    o   	q interfac-    o   	q e {}    -    o   	qu6    o
+	q    uÑ q
+weak.type.*interface {} -    o8   qq 
+x-    o@   qq P   x-    oH   qu-    oL   qu6    o
+qP   uÑ qtype.func(*uint8, string) interface {} -    oqq x-    o   qq    x-    o   q   u-    o   qEÇ◊ª˚    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(*uint8, string) interface {}" -    o(   qq x-    oqq    x-    o   q!   u-    o   q func(*ui-    o   q nt8, str-    o   q ing) int-    o$   q erface {-    o,   q }       -    o-   qu6    o
+q0   uÑ qweak.type.*func(*uint8, string) interface {} -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   uÑ qtype.*uint8 -    oh   qq x-    op   qq x-    ox   qq x6    o
+qÄ   uÑ qtype.[]interface {} -    oqq 1x-    o   qq    x-    o   q   u-    o   qpìÍ/u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ‡  xÑ qgo.string."[]interface {}" -    o(   qq x-    oqq    x-    o   q   u-    o   q []interf-    o   q ace {}  -    o   qu6    o
+q    uÑ qweak.type.*[]interface {} -    o8   qq x-    o@   qq x6    o
+qH   uÑ qtype.func(string, ...interface {}) error -    oqq x-    o   qq    x-    o   q   u-    o   qE◊˛∏è    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(string, ...interface {}) error" -    o(   qq x-    oqq    x-    o   q#   u-    o   q func(str-    o   q ing, ...-    o   q interfac-    o$   q e {}) er-    o,   q ror     -    o/   qu6    o
+q0   uÑ qweak.type.*func(string, ...interface {}) error -    o8   qq x-    o@   q   u-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq xÑ qtype.error -    ox   qq x6    o
+qÄ   uÑ qtype.func(*uint8) *"".DevAuth -    oqq x-    o   qq    x-    o   q   u-    o   q∂ru-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(*uint8) *gologin.DevAuth" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(*ui-    o   q nt8) *go-    o   q login.De-    o$   q vAuth   -    o)   qu6    o
+q0   uÑ qweak.type.*func(*uint8) *"".DevAuth -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq p   x-    o`   q   u-    od   q   u-    oh   qq xÑ qtype.*"".DevAuth -    op   qq x6    o
+qx   uÑ qtype.func(*uint8, *uint8, *"".DevAuth) "".AuthMode -    oqq x-    o   qq    x-    o   q   u-    o   qE…rä    u-    o   qu-    o   q   u-    o   q   u-    o   q   uÑ qruntime.algarray -    o    qq @  xÑ qgo.string."func(*uint8, *uint8, *gologin.DevAuth) gologin.AuthMode" -    o(   qq x-    oqq    x-    o   q7   u-    o   q func(*ui-    o   q nt8, *ui-    o   q nt8, *go-    o$   q login.De-    o,   q vAuth) g-    o4   q ologin.A-    o<   q uthMode -    oC   qu6    o
+qH   uÑ qweak.type.*func(*uint8, *uint8, *"".DevAuth) "".AuthMode -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq x-    ox   qq xÑ qtype."".AuthMode -    oÄ   qq x6    o
+qà   uÑ qtype.func(string, string) int Ñ q type.*runtime.FuncType -    oqq  x-    o   qq    x-    o   q   u-    o   qE6Ã    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ q!go.string."func(string, string) int" -    o(   qq !x-    o!qq    !x-    o   !q   u-    o   !q func(str-    o   !q ing, str-    o   !q ing) int-    o$   !qu6    o
+!q(   uÑ q"weak.type.*func(string, string) int -    o8   qq "x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq xÑ q#type.int -    ox   qq #x6    o
+qÄ   uÑ q$type.func(*uint8) *"".UserPass -    o$qq  x-    o   $qq    $x-    o   $q   u-    o   $q9<_zu-    o   $qu-    o   $q   u-    o   $q   u-    o   $q   u-    o    $qq @  xÑ q%go.string."func(*uint8) *gologin.UserPass" -    o(   $qq %x-    o%qq    %x-    o   %q   u-    o   %q func(*ui-    o   %q nt8) *go-    o   %q login.Us-    o$   %q erPass  -    o*   %qu6    o
+%q0   uÑ q&weak.type.*func(*uint8) *"".UserPass -    o8   $qq &x-    o@   $qu-    oH   $qq h   $x-    oP   $q   u-    oT   $q   u-    oX   $qq p   $x-    o`   $q   u-    od   $q   u-    oh   $qq xÑ q'type.*"".UserPass -    op   $qq 'x6    o
+$qx   uÑ q(type.func(*uint8, *uint8, *"".UserPass) "".AuthMode -    o(qq  x-    o   (qq    (x-    o   (q   u-    o   (qE…r∂î    u-    o   (qu-    o   (q   u-    o   (q   u-    o   (q   u-    o    (qq @  xÑ q)go.string."func(*uint8, *uint8, *gologin.UserPass) gologin.AuthMode" -    o(   (qq )x-    o)qq    )x-    o   )q8   u-    o   )q func(*ui-    o   )q nt8, *ui-    o   )q nt8, *go-    o$   )q login.Us-    o,   )q erPass) -    o4   )q gologin.-    o<   )q AuthMode-    oD   )qu6    o
+)qH   uÑ q*weak.type.*func(*uint8, *uint8, *"".UserPass) "".AuthMode -    o8   (qq *x-    o@   (qu-    oH   (qq h   (x-    oP   (q   u-    oT   (q   u-    oX   (qq Ä   (x-    o`   (q   u-    od   (q   u-    oh   (qq x-    op   (qq x-    ox   (qq 'x-    oÄ   (qq x6    o
+(qà   uÑ q+type.[]uint8 -    o+qq 1x-    o   +qq    +x-    o   +q   u-    o   +qﬂ~.8u-    o   +qu-    o   +q   u-    o   +q   u-    o   +q   u-    o    +qq ‡  xÑ q,go.string."[]uint8" -    o(   +qq ,x-    o,qq    ,x-    o   ,q   u-    o   ,q []uint8 -    o   ,qu6    o
+,q   uÑ q-weak.type.*[]uint8 -    o8   +qq -xÑ q.type.uint8 -    o@   +qq .x6    o
++qH   uÑ q/type.func(*net/http.Request) (string, string, error) -    o/qq  x-    o   /qq    /x-    o   /q   u-    o   /q*Iäu-    o   /qu-    o   /q   u-    o   /q   u-    o   /q   u-    o    /qq @  xÑ q0go.string."func(*http.Request) (string, string, error)" -    o(   /qq 0x-    o0qq    0x-    o   0q+   u-    o   0q func(*ht-    o   0q tp.Reque-    o   0q st) (str-    o$   0q ing, str-    o,   0q ing, err-    o4   0q or)     -    o7   0qu6    o
+0q8   uÑ q1weak.type.*func(*net/http.Request) (string, string, error) -    o8   /qq 1x-    o@   /qu-    oH   /qq h   /x-    oP   /q   u-    oT   /q   u-    oX   /qq p   /x-    o`   /q   u-    od   /q   uÑ qtype.*net/http.Request -    oh   /qq x-    op   /qq x-    ox   /qq x-    oÄ   /qq x6    o
+/qà   uÑ qtype.func(*uint8, int64, int64) []uint8 -    oqq  x-    o   qq    x-    o   q   u-    o   qIzK|u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(*uint8, int64, int64) []uint8" -    o(   qq x-    oqq    x-    o   q"   u-    o   q func(*ui-    o   q nt8, int-    o   q 64, int6-    o$   q 4) []uin-    o,   q t8      -    o.   qu6    o
+q0   uÑ qweak.type.*func(*uint8, int64, int64) []uint8 -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   q   u-    od   q   u-    oh   qq xÑ qtype.int64 -    op   qq x-    ox   qq x-    oÄ   qq +x6    o
+qà   uÑ qtype.func(string) []uint8 -    oqq  x-    o   qq    x-    o   q   u-    o   qEE¡'Ù    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(string) []uint8" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(str-    o   q ing) []u-    o   q int8    -    o    qu6    o
+q(   uÑ qweak.type.*func(string) []uint8 -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq p   x-    o`   q   u-    od   q   uÑ q	type.string -    oh   qq 	x-    op   qq +x6    o
+qx   uÑ q
+type.func([]uint8) string -    o
+qq  x-    o   
+qq    
+x-    o   
+q   u-    o   
+qÙŒ»2u-    o   
+qu-    o   
+q   u-    o   
+q   u-    o   
+q   u-    o    
+qq @  xÑ qgo.string."func([]uint8) string" -    o(   
+qq x-    oqq    x-    o   q   u-    o   q func([]u-    o   q int8) st-    o   q ring    -    o    qu6    o
+q(   uÑ qweak.type.*func([]uint8) string -    o8   
+qq x-    o@   
+qu-    oH   
+qq h   
+x-    oP   
+q   u-    oT   
+q   u-    oX   
+qq p   
+x-    o`   
+q   u-    od   
+q   u-    oh   
+qq +x-    op   
+qq 	x6    o
+
+qx   uÑ qtype.func(string, string, int) []string -    oqq  x-    o   qq    x-    o   q   u-    o   qEs8DÅ    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(string, string, int) []string" -    o(   qq x-    oqq    x-    o   q"   u-    o   q func(str-    o   q ing, str-    o   q ing, int-    o$   q ) []stri-    o,   q ng      -    o.   qu6    o
+q0   uÑ qweak.type.*func(string, string, int) []string -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   q   u-    od   q   u-    oh   qq 	x-    op   qq 	x-    ox   qq #xÑ qtype.[]string -    oÄ   qq x6    o
+qà   uÑ qtype.method(*"".UserPass) func(*net/http.Request) bool -    oqq  x-    o   qq    x-    o   q   u-    o   qEeˇ¿¨    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."method(*gologin.UserPass) func(*http.Request) bool" -    o(   qq x-    oqq    x-    o   q2   u-    o   q method(*-    o   q gologin.-    o   q UserPass-    o$   q ) func(*-    o,   q http.Req-    o4   q uest) bo-    o<   q ol      -    o>   qu6    o
+q@   uÑ qweak.type.*method(*"".UserPass) func(*net/http.Request) bool -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq 'x-    op   qq xÑ qtype.bool -    ox   qq x6    o
+qÄ   uÑ qtype.method(*"".UserPass) func(*net/http.Request) -    oqq  x-    o   qq    x-    o   q   u-    o   qE$Iî    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."method(*gologin.UserPass) func(*http.Request)" -    o(   qq x-    oqq    x-    o   q-   u-    o   q method(*-    o   q gologin.-    o   q UserPass-    o$   q ) func(*-    o,   q http.Req-    o4   q uest)   -    o9   qu6    o
+q@   uÑ qweak.type.*method(*"".UserPass) func(*net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   qu-    oh   qq 'x-    op   qq x6    o
+qx   uÑ qtype.method(*"".DevAuth) func(*net/http.Request) bool -    oqq  x-    o   qq    x-    o   q   u-    o   qEeˇ¿¨    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."method(*gologin.DevAuth) func(*http.Request) bool" -    o(   qq x-    oqq    x-    o   q1   u-    o   q method(*-    o   q gologin.-    o   q DevAuth)-    o$   q  func(*h-    o,   q ttp.Requ-    o4   q est) boo-    o<   q l       -    o=   qu6    o
+q@   uÑ qweak.type.*method(*"".DevAuth) func(*net/http.Request) bool -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   uÑ qtype.*"".DevAuth -    oh   qq x-    op   qq x-    ox   qq x6    o
+qÄ   uÑ qtype.method(*"".DevAuth) func(*net/http.Request) -    oqq  x-    o   qq    x-    o   q   u-    o   qE$Iî    u-    o   qu-    o   q   u-    o   q   u-    o   q   uÑ qruntime.algarray -    o    qq @  xÑ qgo.string."method(*gologin.DevAuth) func(*http.Request)" -    o(   qq x-    oqq    x-    o   q,   u-    o   q method(*-    o   q gologin.-    o   q DevAuth)-    o$   q  func(*h-    o,   q ttp.Requ-    o4   q est)    -    o8   qu6    o
+q@   uÑ qweak.type.*method(*"".DevAuth) func(*net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   qu-    oh   qq x-    op   qq x6    o
+qx   uÑ q type.func(net/http.ResponseWriter) Ñ q!type.*runtime.FuncType -    o qq !x-    o    qq     x-    o    q   u-    o    qE∆†À≈    u-    o    qu-    o    q   u-    o    q   u-    o    q   u-    o     qq @  xÑ q"go.string."func(http.ResponseWriter)" -    o(    qq "x-    o"qq    "x-    o   "q   u-    o   "q func(htt-    o   "q p.Respon-    o   "q seWriter-    o$   "q )       -    o%   "qu6    o
+"q(   uÑ q#weak.type.*func(net/http.ResponseWriter) -    o8    qq #x-    o@    qu-    oH    qq h    x-    oP    q   u-    oT    q   u-    oX    qq p    x-    o`    qu-    od    quÑ q$type.net/http.ResponseWriter -    oh    qq $x6    o
+ qp   uÑ q%type.func(*uint8, "".AuthMode) (*"".DevAuth, bool) -    o%qq !x-    o   %qq    %x-    o   %q   u-    o   %qEA#6»    u-    o   %qu-    o   %q   u-    o   %q   u-    o   %q   u-    o    %qq @  xÑ q&go.string."func(*uint8, gologin.AuthMode) (*gologin.DevAuth, bool)" -    o(   %qq &x-    o&qq    &x-    o   &q7   u-    o   &q func(*ui-    o   &q nt8, gol-    o   &q ogin.Aut-    o$   &q hMode) (-    o,   &q *gologin-    o4   &q .DevAuth-    o<   &q , bool) -    oC   &qu6    o
+&qH   uÑ q'weak.type.*func(*uint8, "".AuthMode) (*"".DevAuth, bool) -    o8   %qq 'x-    o@   %qu-    oH   %qq h   %x-    oP   %q   u-    oT   %q   u-    oX   %qq x   %x-    o`   %q   u-    od   %q   uÑ q(type.*uint8 -    oh   %qq (xÑ q)type."".AuthMode -    op   %qq )x-    ox   %qq x-    oÄ   %qq x6    o
+%qà   uÑ q*type.func(int, string, string) string -    o*qq !x-    o   *qq    *x-    o   *q   u-    o   *qE`ó≈ÿ    u-    o   *qu-    o   *q   u-    o   *q   u-    o   *q   u-    o    *qq @  xÑ q+go.string."func(int, string, string) string" -    o(   *qq +x-    o+qq    +x-    o   +q    u-    o   +q func(int-    o   +q , string-    o   +q , string-    o$   +q ) string-    o,   +qu6    o
++q0   uÑ q,weak.type.*func(int, string, string) string -    o8   *qq ,x-    o@   *qu-    oH   *qq h   *x-    oP   *q   u-    oT   *q   u-    oX   *qq Ä   *x-    o`   *q   u-    od   *q   uÑ q-type.int -    oh   *qq -x-    op   *qq 	x-    ox   *qq 	x-    oÄ   *qq 	x6    o
+*qà   uÑ q.type.func(string, ...interface {}) string -    o.qq !x-    o   .qq    .x-    o   .q   u-    o   .qEöÏÎ∫    u-    o   .qu-    o   .q   u-    o   .q   u-    o   .q   u-    o    .qq @  xÑ q/go.string."func(string, ...interface {}) string" -    o(   .qq /x-    o/qq    /x-    o   /q$   u-    o   /q func(str-    o   /q ing, ...-    o   /q interfac-    o$   /q e {}) st-    o,   /q ring    -    o0   /qu6    o
+/q8   uÑ q0weak.type.*func(string, ...interface {}) string -    o8   .qq 0x-    o@   .q   u-    oH   .qq h   .x-    oP   .q   u-    oT   .q   u-    oX   .qq x   .x-    o`   .q   u-    od   .q   u-    oh   .qq 	xÑ q1type.[]interface {} -    op   .qq 1x-    ox   .qq 	x6    o
+.qÄ   uÑ qtype.func(*uint8, net/http.ResponseWriter) io.Writer -    oqq !x-    o   qq    x-    o   q   u-    o   qEK¡ æ    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(*uint8, http.ResponseWriter) io.Writer" -    o(   qq x-    oqq    x-    o   q+   u-    o   q func(*ui-    o   q nt8, htt-    o   q p.Respon-    o$   q seWriter-    o,   q ) io.Wri-    o4   q ter     -    o7   qu6    o
+q8   uÑ qweak.type.*func(*uint8, net/http.ResponseWriter) io.Writer -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq (x-    op   qq $xÑ qtype.io.Writer -    ox   qq x6    o
+qÄ   uÑ qtype.func(io.Writer, string, ...interface {}) (int, error) -    oqq !x-    o   qq    x-    o   q   u-    o   qE ô    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  xÑ qgo.string."func(io.Writer, string, ...interface {}) (int, error)" -    o(   qq x-    oqq    x-    o   q5   u-    o   q func(io.-    o   q Writer, -    o   q string, -    o$   q ...inter-    o,   q face {})-    o4   q  (int, e-    o<   q rror)   -    oA   qu6    o
+qH   uÑ qweak.type.*func(io.Writer, string, ...interface {}) (int, error) -    o8   qq x-    o@   q   u-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq 	x-    ox   qq 1x-    oÄ   qq -xÑ qtype.error -    oà   qq x6    o
+qê   uÑ q	type.*"".Handler Ñ q
+type.*runtime.PtrType -    o	qq 
+x-    o   	qq    	x-    o   	q   u-    o   	q!:√Su-    o   	qu-    o   	q   u-    o   	q   u-    o   	q   u-    o    	qq Ä   xÑ qgo.string."*gologin.Handler" -    o(   	qq x-    oqq    x-    o   q   u-    o   q *gologin-    o   q .Handler-    o   qu6    o
+q    uÑ qweak.type.**"".Handler -    o8   	qq xÑ qtype."".Handler -    o@   	qq xÑ qgo.string."gologin" -    oqq    x-    o   q   u-    o   q gologin -    o   qu6    o
+q   uÑ qgo.string."Handler" -    oqq    x-    o   q   u-    o   q Handler -    o   qu6    o
+q   uÑ qgo.string."ServeHTTP" -    oqq    x-    o   q	   u-    o   q ServeHTT-    o   q P       -    o   qu6    o
+q   u-    o0   	qq H   	xÑ qtype.func(*"".Handler, net/http.ResponseWriter, *net/http.Request) -    oqq !x-    o   qq    x-    o   q   u-    o   qEwIû    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(*gologin.Handler, http.ResponseWriter, *http.Request)" -    o(   qq x-    oqq    x-    o   q:   u-    o   q func(*go-    o   q login.Ha-    o   q ndler, h-    o$   q ttp.Resp-    o,   q onseWrit-    o4   q er, *htt-    o<   q p.Reques-    oD   q t)      -    oF   qu6    o
+qH   uÑ qweak.type.*func(*"".Handler, net/http.ResponseWriter, *net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   qu-    od   qu-    oh   qq 	x-    op   qq $xÑ qtype.*net/http.Request -    ox   qq x6    o
+qÄ   u-    oH   	qu-    oP   	qu-    oX   	qq h   	x-    o`   	q   u-    od   	q   u-    oh   	qq x-    op   	quÑ qtype.func(net/http.ResponseWriter, *net/http.Request) -    oqq !x-    o   qq    x-    o   q   u-    o   qëÙõu-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(http.ResponseWriter, *http.Request)" -    o(   qq x-    oqq    x-    o   q(   u-    o   q func(htt-    o   q p.Respon-    o   q seWriter-    o$   q , *http.-    o,   q Request)-    o4   qu6    o
+q8   uÑ qweak.type.*func(net/http.ResponseWriter, *net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   qu-    oh   qq $x-    op   qq x6    o
+qx   u-    ox   	qq x-    oÄ   	qq xÑ q"".(*Handler).ServeHTTP -    oà   	qq x-    oê   	qq x6    o	qò   uÑ qtype.*runtime.StructType -    oqq x-    o   qq    x-    o   q   u-    o   qiW√u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq †  xÑ qgo.string."gologin.Handler" -    o(   qq x-    oqq    x-    o   q   u-    o   q gologin.-    o   q Handler -    o   qu6    o
+q    u-    o8   qq 	x-    o@   qq P   x-    oH   q   u-    oL   q   u-    oP   qu-    oX   quÑ qtype.net/http.Handler -    o`   qq x-    oh   qu-    op   qu-    o0   qq x   xÑ qtype.func("".Handler, net/http.ResponseWriter, *net/http.Request) -    oqq !x-    o   qq    x-    o   q   u-    o   qE.qÙÃ    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq ¿   xÑ qgo.string."func(gologin.Handler, http.ResponseWriter, *http.Request)" -    o(   qq x-    oqq    x-    o   q9   u-    o   q func(gol-    o   q ogin.Han-    o   q dler, ht-    o$   q tp.Respo-    o,   q nseWrite-    o4   q r, *http-    o<   q .Request-    oD   q )       -    oE   qu6    o
+qH   uÑ qweak.type.*func("".Handler, net/http.ResponseWriter, *net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   qu-    od   qu-    oh   qq x-    op   qq $x-    ox   qq x6    o
+qÄ   u-    ox   qq xÑ qgo.importpath."". -    oÄ   qq x-    oà   qq ò   x-    oê   q   u-    oî   q   u-    oò   qq x-    o†   qu-    o®   qq x-    o∞   qq x-    o∏   qq xÑ q "".Handler.ServeHTTP -    o¿   qq  x6    oq»   uÑ q!type.method("".Handler) func(net/http.ResponseWriter, *net/http.Request) Ñ q"type.*runtime.FuncType -    o!qq "x-    o   !qq    !x-    o   !q   u-    o   !qëÙõu-    o   !qu-    o   !q   u-    o   !q   u-    o   !q   uÑ q#runtime.algarray -    o    !qq @  #xÑ q$go.string."method(gologin.Handler) func(http.ResponseWriter, *http.Request)" -    o(   !qq $x-    o$qq    $x-    o   $q@   u-    o   $q method(g-    o   $q ologin.H-    o   $q andler) -    o$   $q func(htt-    o,   $q p.Respon-    o4   $q seWriter-    o<   $q , *http.-    oD   $q Request)-    oL   $qu6    o
+$qP   uÑ q%weak.type.*method("".Handler) func(net/http.ResponseWriter, *net/http.Request) -    o8   !qq %x-    o@   !qu-    oH   !qq h   !x-    oP   !q   u-    oT   !q   u-    oX   !qq Ä   !x-    o`   !qu-    od   !qu-    oh   !qq xÑ q&type.net/http.ResponseWriter -    op   !qq &x-    ox   !qq x6    o
+!qÄ   uÑ q'type.func(github.com/georgerogers42/goweb.Responder) github.com/georgerogers42/goweb.Responder -    o'qq "x-    o   'qq    'x-    o   'q   u-    o   'qmÍhu-    o   'qu-    o   'q   u-    o   'q   u-    o   'q   u-    o    'qq @  #xÑ q(go.string."func(goweb.Responder) goweb.Responder" -    o(   'qq (x-    o(qq    (x-    o   (q%   u-    o   (q func(gow-    o   (q eb.Respo-    o   (q nder) go-    o$   (q web.Resp-    o,   (q onder   -    o1   (qu6    o
+(q8   uÑ q)weak.type.*func(github.com/georgerogers42/goweb.Responder) github.com/georgerogers42/goweb.Responder -    o8   'qq )x-    o@   'qu-    oH   'qq h   'x-    oP   'q   u-    oT   'q   u-    oX   'qq p   'x-    o`   'q   u-    od   'q   uÑ q*type.github.com/georgerogers42/goweb.Responder -    oh   'qq *x-    op   'qq *x6    o
+'qx   uÑ q+type.func(*uint8) *github.com/georgerogers42/goweb.Responder -    o+qq "x-    o   +qq    +x-    o   +q   u-    o   +qEìÍv¨    u-    o   +qu-    o   +q   u-    o   +q   u-    o   +q   u-    o    +qq @  #xÑ q,go.string."func(*uint8) *goweb.Responder" -    o(   +qq ,x-    o,qq    ,x-    o   ,q   u-    o   ,q func(*ui-    o   ,q nt8) *go-    o   ,q web.Resp-    o$   ,q onder   -    o)   ,qu6    o
+,q0   uÑ q-weak.type.*func(*uint8) *github.com/georgerogers42/goweb.Responder -    o8   +qq -x-    o@   +qu-    oH   +qq h   +x-    oP   +q   u-    oT   +q   u-    oX   +qq p   +x-    o`   +q   u-    od   +q   uÑ q.type.*uint8 -    oh   +qq .xÑ q/type.*github.com/georgerogers42/goweb.Responder -    op   +qq /x6    o
++qx   uÑ q0type.func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    o0qq "x-    o   0qq    0x-    o   0q   u-    o   0q ºHwu-    o   0qu-    o   0q   u-    o   0q   u-    o   0q   u-    o    0qq @  #xÑ q1""..gostring.1 -    o(   0qq 1x-    o1qq    1x-    o   1qi   u-    o   1q func(*go-    o   1q web.Resp-    o   1q onder, u-    o$   1q intptr, -    o,   1q http.Res-    o4   1q ponseWri-    o<   1q ter, *ht-    oD   1q tp.Reque-    oL   1q st, gowe-    oT   1q b.Result-    o\   1q , ...str-    od   1q ing) gow-    ol   1q eb.Resul-    ot   1q t       -    ou   1qu6    o
+1qx   uÑ qweak.type.*func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    o8   0qq x-    o@   0q   u-    oH   0qq h   0x-    oP   0q   u-    oT   0q   u-    oX   0qq ò   0x-    o`   0q   u-    od   0q   u-    oh   0qq /xÑ qtype.uintptr -    op   0qq x-    ox   0qq &x-    oÄ   0qq xÑ qtype.github.com/georgerogers42/goweb.Result -    oà   0qq xÑ qtype.[]string -    oê   0qq x-    oò   0qq x6    o
+0q†   uÑ qtype.func(net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    oqq "x-    o   qq    x-    o   q   u-    o   qE0=e∆    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func(http.ResponseWriter, *http.Request, goweb.Result, ...string) goweb.Result" -    o(   qq x-    oqq    x-    o   qN   u-    o   q func(htt-    o   q p.Respon-    o   q seWriter-    o$   q , *http.-    o,   q Request,-    o4   q  goweb.R-    o<   q esult, .-    oD   q ..string-    oL   q ) goweb.-    oT   q Result  -    oZ   qu6    o
+q`   uÑ qweak.type.*func(net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    o8   qq x-    o@   q   u-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq à   x-    o`   q   u-    od   q   u-    oh   qq &x-    op   qq x-    ox   qq x-    oÄ   qq x-    oà   qq x6    o
+qê   uÑ qtype.func(int, func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result, *github.com/georgerogers42/goweb.Responder) func(net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    oqq "x-    o   qq    x-    o   q   u-    o   qE;ﬁ”    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ q	""..gostring.2 -    o(   qq 	x-    o	qq    	x-    o   	q’   u-    o   	q func(int-    o   	q , func(*-    o   	q goweb.Re-    o$   	q sponder,-    o,   	q  uintptr-    o4   	q , http.R-    o<   	q esponseW-    oD   	q riter, *-    oL   	q http.Req-    oT   	q uest, go-    o\   	q web.Resu-    od   	q lt, ...s-    ol   	q tring) g-    ot   	q oweb.Res-    o|   	q ult, *go-    oÑ   	q web.Resp-    oå   	q onder) f-    oî   	q unc(http-    oú   	q .Respons-    o§   	q eWriter,-    o¨   	q  *http.R-    o¥   	q equest, -    oº   	q goweb.Re-    oƒ   	q sult, ..-    oÃ   	q .string)-    o‘   	q  goweb.R-    o‹   	q esult   -    o·   	qu6    o
+	qË   uÑ q
+weak.type.*func(int, func(*github.com/georgerogers42/goweb.Responder, uintptr, net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result, *github.com/georgerogers42/goweb.Responder) func(net/http.ResponseWriter, *net/http.Request, github.com/georgerogers42/goweb.Result, ...string) github.com/georgerogers42/goweb.Result -    o8   qq 
+x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   q   u-    od   q   uÑ qtype.int -    oh   qq x-    op   qq 0x-    ox   qq /x-    oÄ   qq x6    o
+qà   uÑ qtype.func() -    oqq "x-    o   qq    x-    o   q   u-    o   qEˆºÇˆ    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func()" -    o(   qq x-    oqq    x-    o   q   u-    o   q func()  -    o   qu6    o
+q   uÑ qweak.type.*func() -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   qu-    oT   qu-    oX   qq h   x-    o`   qu-    od   qu6    o
+qh   uÑ qtype.func(string) *regexp.Regexp -    oqq "x-    o   qq    x-    o   q   u-    o   qEöZÑ†    u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func(string) *regexp.Regexp" -    o(   qq x-    oqq    x-    o   q   u-    o   q func(str-    o   q ing) *re-    o   q gexp.Reg-    o$   q exp     -    o'   qu6    o
+q(   uÑ qweak.type.*func(string) *regexp.Regexp -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq p   x-    o`   q   u-    od   q   uÑ qtype.string -    oh   qq xÑ qtype.*regexp.Regexp -    op   qq x6    o
+qx   uÑ qtype.func("".AuthMode, *net/http.Request) -    oqq "x-    o   qq    x-    o   q   u-    o   qﬁïQAu-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func(gologin.AuthMode, *http.Request)" -    o(   qq x-    oqq    x-    o   q%   u-    o   q func(gol-    o   q ogin.Aut-    o   q hMode, *-    o$   q http.Req-    o,   q uest)   -    o1   qu6    o
+q8   uÑ qweak.type.*func("".AuthMode, *net/http.Request) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   qu-    od   quÑ qtype."".AuthMode -    oh   qq xÑ qtype.*net/http.Request -    op   qq x6    o
+qx   uÑ qtype.func("".AuthMode, *net/http.Request) bool -    oqq "x-    o   qq    x-    o   q   u-    o   qsåJ	u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func(gologin.AuthMode, *http.Request) bool" -    o(   qq x-    oqq    x-    o   q*   u-    o   q func(gol-    o   q ogin.Aut-    o   q hMode, *-    o$   q http.Req-    o,   q uest) bo-    o4   q ol      -    o6   qu6    o
+q8   uÑ qweak.type.*func("".AuthMode, *net/http.Request) bool -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq x   x-    o`   q   u-    od   q   u-    oh   qq x-    op   qq xÑ qtype.bool -    ox   qq x6    o
+qÄ   uÑ qtype.func(*uintptr, uintptr, *"".UserPass) -    oqq "x-    o   qq    x-    o   q   u-    o   q^≤´u-    o   qu-    o   q   u-    o   q   u-    o   q   u-    o    qq @  #xÑ qgo.string."func(*uintptr, uintptr, *gologin.UserPass)" -    o(   qq x-    oqq    x-    o   q*   u-    o   q func(*ui-    o   q ntptr, u-    o   q intptr, -    o$   q *gologin-    o,   q .UserPas-    o4   q s)      -    o6   qu6    o
+q8   uÑ qweak.type.*func(*uintptr, uintptr, *"".UserPass) -    o8   qq x-    o@   qu-    oH   qq h   x-    oP   q   u-    oT   q   u-    oX   qq Ä   x-    o`   qu-    od   quÑ q type.*uintptr -    oh   qq  x-    op   qq xÑ q!type.*"".UserPass -    ox   qq !x6    o
+qÄ   uÑ q"type.func(*uintptr, uintptr, *string) Ñ q#type.*runtime.FuncType -    o"qq #x-    o   "qq    "x-    o   "q   u-    o   "qE{ÛÇò    u-    o   "qu-    o   "q   u-    o   "q   u-    o   "q   uÑ q$runtime.algarray -    o    "qq @  $xÑ q%go.string."func(*uintptr, uintptr, *string)" -    o(   "qq %x-    o%qq    %x-    o   %q    u-    o   %q func(*ui-    o   %q ntptr, u-    o   %q intptr, -    o$   %q *string)-    o,   %qu6    o
+%q0   uÑ q&weak.type.*func(*uintptr, uintptr, *string) -    o8   "qq &x-    o@   "qu-    oH   "qq h   "x-    oP   "q   u-    oT   "q   u-    oX   "qq Ä   "x-    o`   "qu-    od   "qu-    oh   "qq  x-    op   "qq xÑ q'type.*string -    ox   "qq 'x6    o
+"qÄ   uÑ q(type.func(*bool, uintptr, *"".UserPass, *"".UserPass) -    o(qq #x-    o   (qq    (x-    o   (q   u-    o   (qEx0%Ó    u-    o   (qu-    o   (q   u-    o   (q   u-    o   (q   u-    o    (qq @  $xÑ q)go.string."func(*bool, uintptr, *gologin.UserPass, *gologin.UserPass)" -    o(   (qq )x-    o)qq    )x-    o   )q:   u-    o   )q func(*bo-    o   )q ol, uint-    o   )q ptr, *go-    o$   )q login.Us-    o,   )q erPass, -    o4   )q *gologin-    o<   )q .UserPas-    oD   )q s)      -    oF   )qu6    o
+)qH   uÑ q*weak.type.*func(*bool, uintptr, *"".UserPass, *"".UserPass) -    o8   (qq *x-    o@   (qu-    oH   (qq h   (x-    oP   (q   u-    oT   (q   u-    oX   (qq à   (x-    o`   (qu-    od   (quÑ q+type.*bool -    oh   (qq +x-    op   (qq x-    ox   (qq !x-    oÄ   (qq !x6    o
+(qà   uÑ q,type.func(string, string, string) -    o,qq #x-    o   ,qq    ,x-    o   ,q   u-    o   ,qpx-8u-    o   ,qu-    o   ,q   u-    o   ,q   u-    o   ,q   u-    o    ,qq @  $xÑ q-go.string."func(string, string, string)" -    o(   ,qq -x-    o-qq    -x-    o   -q   u-    o   -q func(str-    o   -q ing, str-    o   -q ing, str-    o$   -q ing)    -    o(   -qu6    o
+-q0   uÑ q.weak.type.*func(string, string, string) -    o8   ,qq .x-    o@   ,qu-    oH   ,qq h   ,x-    oP   ,q   u-    oT   ,q   u-    oX   ,qq Ä   ,x-    o`   ,qu-    od   ,qu-    oh   ,qq x-    op   ,qq x-    ox   ,qq x6    o
+,qÄ   uÑ q/go.importpath.runtime. Ñ q0go.string."runtime" -    o/qq    0x-    o0qq    0x-    o   0q   u-    o   0q runtime -    o   0qu6    o
+0q   u-    o   /q   u6    o
+/q   uÑ q1go.importpath.net/http. Ñ qgo.string."net/http" -    o1qq    x-    oqq    x-    o   q   u-    o   q net/http-    o   qu6    o
+q   u-    o   1q   u6    o
+1q   uÑ qgo.importpath.encoding/base64. Ñ qgo.string."encoding/base64" -    oqq    x-    oqq    x-    o   q   u-    o   q encoding-    o   q /base64 -    o   qu6    o
+q    u-    o   q   u6    o
+q   uÑ qgo.importpath.os. Ñ qgo.string."os" -    oqq    x-    oqq    x-    o   q   u-    o   q os      -    o   qu6    o
+q   u-    o   q   u6    o
+q   uÑ qgo.importpath.strings. Ñ qgo.string."strings" -    oqq    x-    oqq    x-    o   q   u-    o   q strings -    o   qu6    o
+q   u-    o   q   u6    o
+q   uÑ qgo.importpath.fmt. Ñ q	go.string."fmt" -    oqq    	x-    o	qq    	x-    o   	q   u-    o   	q fmt     -    o   	qu6    o
+	q   u-    o   q   u6    o
+q   uÑ q
+go.importpath.github.com/georgerogers42/goweb. Ñ qgo.string."github.com/georgerogers42/goweb" -    o
+qq    x-    oqq    x-    o   q   u-    o   q github.c-    o   q om/georg-    o   q erogers4-    o$   q 2/goweb -    o+   qu6    o
+q0   u-    o   
+q   u6    o
+
+q   uÑ qgo.importpath.regexp. Ñ qgo.string."regexp" -    oqq    x-    oqq    x-    o   q   u-    o   q regexp  -    o   qu6    o
+q   u-    o   q   u6    o
+q   uP      
